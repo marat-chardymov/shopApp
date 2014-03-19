@@ -5,7 +5,7 @@
   <artifactId>shopApp</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>shopApp Maven Webapp</name>
+  <nameasdf>shopApp Maven Webapp</nameasdf>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
