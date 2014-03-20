@@ -38,7 +38,13 @@
     <xs:complexType name="product">
         <xs:sequence>
             <xs:element name="color" type="xs:string" minOccurs="0"/>
-            <xs:element name="dateOfIssue" type="xs:string" minOccurs="0"/>
+            <xs:element name="dateOfIssue" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{2}-\d{2}-\d{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
             <xs:element name="model" type="xs:string" minOccurs="0"/>
             <xs:choice>
                 <xs:element name="price" type="xs:int" minOccurs="0"/>
