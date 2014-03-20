@@ -7,7 +7,6 @@
                     <color>white</color>
                     <dateOfIssue>12-12-2012</dateOfIssue>
                     <model>as001</model>
-                    <notInStock>false</notInStock>
                     <price>100</price>
                     <producer>producer1</producer>
                 </product>
@@ -15,8 +14,7 @@
                     <color>black</color>
                     <dateOfIssue>02-02-2012</dateOfIssue>
                     <model>as002</model>
-                    <notInStock>false</notInStock>
-                    <price>200</price>
+                    <notInStock>true</notInStock>
                     <producer>producer2</producer>
                 </product>
             </products>
@@ -27,15 +25,13 @@
                     <color>white</color>
                     <dateOfIssue>12-12-2012</dateOfIssue>
                     <model>as003</model>
-                    <notInStock>false</notInStock>
-                    <price>300</price>
+                    <notInStock>true</notInStock>
                     <producer>producer3</producer>
                 </product>
                 <product>
                     <color>black</color>
                     <dateOfIssue>02-02-2012</dateOfIssue>
                     <model>as004</model>
-                    <notInStock>false</notInStock>
                     <price>400</price>
                     <producer>producer4</producer>
                 </product>

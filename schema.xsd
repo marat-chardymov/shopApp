@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:element name="catalog" type="catalog"/>
+    <xs:element name="catalog" type="catalog"/>
 
-  <xs:element name="category" type="category"/>
+    <xs:element name="category" type="category"/>
 
-  <xs:element name="product" type="product"/>
+    <xs:element name="product" type="product"/>
 
-  <xs:element name="subCategory" type="subCategory"/>
+    <xs:element name="subCategory" type="subCategory"/>
 
-  <xs:complexType name="catalog">
-    <xs:sequence>
-      <xs:element ref="category" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="catalog">
+        <xs:sequence>
+            <xs:element ref="category" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="category">
-    <xs:sequence>
-      <xs:element name="subCategories" type="subCategory" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="name" type="xs:string"/>
-  </xs:complexType>
+    <xs:complexType name="category">
+        <xs:sequence>
+            <xs:element name="subCategories" type="subCategory" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
 
-  <xs:complexType name="subCategory">
-    <xs:sequence>
-      <xs:element name="products" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element ref="product" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="name" type="xs:string"/>
-  </xs:complexType>
+    <xs:complexType name="subCategory">
+        <xs:sequence>
+            <xs:element name="products" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="product" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
 
-  <xs:complexType name="product">
-    <xs:sequence>
-      <xs:element name="color" type="xs:string" minOccurs="0"/>
-      <xs:element name="dateOfIssue" type="xs:string" minOccurs="0"/>
-      <xs:element name="model" type="xs:string" minOccurs="0"/>
-      <xs:element name="notInStock" type="xs:boolean"/>
-      <xs:element name="price" type="xs:int" minOccurs="0"/>
-      <xs:element name="producer" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="product">
+        <xs:sequence>
+            <xs:element name="color" type="xs:string" minOccurs="0"/>
+            <xs:element name="dateOfIssue" type="xs:string" minOccurs="0"/>
+            <xs:element name="model" type="xs:string" minOccurs="0"/>
+            <xs:choice>
+                <xs:element name="price" type="xs:int" minOccurs="0"/>
+                <xs:element name="notInStock" type="xs:boolean"/>
+            </xs:choice>
+            <xs:element name="producer" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
 
