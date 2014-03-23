@@ -4,6 +4,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * Created by Marat_Chardymau on 3/19/14.
@@ -11,6 +12,7 @@ import java.io.File;
 public class asdf {
     public static void main(String[] args) throws TransformerException {
         File styleSheet = new File("makehtml.xsl");
+//        InputStream inputStream=class.getResourceAsStream("/json/test.xml");
         StreamSource styleSource = new StreamSource(styleSheet);
         Transformer t = TransformerFactory.newInstance().newTransformer(styleSource);
         Source text = new StreamSource(new File("staff.xml"));

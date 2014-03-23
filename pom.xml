@@ -7,6 +7,9 @@
     <version>1.0-SNAPSHOT</version>
     <name>shopApp Maven Webapp</name>
     <url>http://maven.apache.org</url>
+    <properties>
+        <spring.version>4.0.0.RELEASE</spring.version>
+    </properties>
     <dependencies>
         <!-- java servlets dependency -->
         <dependency>
@@ -20,6 +23,19 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- junit test framework -->
         <dependency>
             <groupId>junit</groupId>
