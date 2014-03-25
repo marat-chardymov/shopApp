@@ -1,1 +1,1 @@
-<jsp:forward page="FrontController.do?action=categories"/>
+<jsp:forward page="FrontController.do?action=categoriesList"/>

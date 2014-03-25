@@ -1,17 +1,19 @@
 package com.epam.controller;
 
-import com.epam.controller.actions.CategoriesListAction;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
+import com.epam.controller.actions.CategoriesListAction;
+import com.epam.controller.actions.SubcategoriesListAction;
 
 public class ActionFactory {
 
 	public static Map<String, Action> actions = new HashMap<String, Action>();
 
 	static {
-		actions.put("categories", new CategoriesListAction());
+		actions.put("categoriesList", new CategoriesListAction());
+		actions.put("subcategoriesList", new SubcategoriesListAction());
 	}
 
 	public static Action getAction(HttpServletRequest request) {

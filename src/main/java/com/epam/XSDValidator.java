@@ -10,8 +10,6 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class XSDValidator {
     public static void main(String[] args) throws IOException, SAXException {
