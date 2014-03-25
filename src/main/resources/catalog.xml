@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <catalog>
-    <category name="c1">
-        <subCategories name="s1">
-            <products>
-                <product>
-                    <color>white</color>
-                    <dateOfIssue>12-12-2012</dateOfIssue>
-                    <model>as001</model>
-                    <price>100</price>
-                    <producer>producer1</producer>
-                </product>
-                <product>
-                    <color>black</color>
-                    <dateOfIssue>02-02-2012</dateOfIssue>
-                    <model>as002</model>
-                    <notInStock>true</notInStock>
-                    <producer>producer2</producer>
-                </product>
-            </products>
-        </subCategories>
-        <subCategories name="s2">
-            <products>
-                <product>
-                    <color>white</color>
-                    <dateOfIssue>12-12-2012</dateOfIssue>
-                    <model>as003</model>
-                    <notInStock>true</notInStock>
-                    <producer>producer3</producer>
-                </product>
-                <product>
-                    <color>black</color>
-                    <dateOfIssue>02-02-2012</dateOfIssue>
-                    <model>as004</model>
-                    <price>400</price>
-                    <producer>producer4</producer>
-                </product>
-            </products>
-        </subCategories>
-    </category>
-    <category name="c2">
-        <subCategories name="s3"/>
-        <subCategories name="s4"/>
-    </category>
+	<category name="c1">
+		<subCategories name="s1">
+			<products>
+				<product>
+					<color>Dark salmon</color>
+					<dateOfIssue>12-12-2012</dateOfIssue>
+					<model>as001</model>
+					<price>100</price>
+					<producer>producer1</producer>
+				</product>
+				<product>
+					<color>Denim</color>
+					<dateOfIssue>02-02-2012</dateOfIssue>
+					<model>as002</model>
+					<notInStock>true</notInStock>
+					<producer>producer2</producer>
+				</product>
+			</products>
+		</subCategories>
+		<subCategories name="s2">
+			<products>
+				<product>
+					<color>Air Force blue</color>
+					<dateOfIssue>12-12-2012</dateOfIssue>
+					<model>as003</model>
+					<notInStock>true</notInStock>
+					<producer>producer3</producer>
+				</product>
+				<product>
+					<color>Carolina blue</color>
+					<dateOfIssue>02-02-2012</dateOfIssue>
+					<model>as004</model>
+					<price>400</price>
+					<producer>producer4</producer>
+				</product>
+			</products>
+		</subCategories>
+	</category>
+	<category name="c2">
+		<subCategories name="s3">
+			<products>
+				<product>
+					<color>ultraviolet</color>
+					<dateOfIssue>12-12-2012</dateOfIssue>
+					<model>as003</model>
+					<notInStock>true</notInStock>
+					<producer>producer3</producer>
+				</product>
+				<product>
+					<color>navy blue</color>
+					<dateOfIssue>02-02-2012</dateOfIssue>
+					<model>as004</model>
+					<price>400</price>
+					<producer>producer4</producer>
+				</product>
+			</products>
+		</subCategories>
+		<subCategories name="s4">
+			<products>
+				<product>
+					<color>Burnt orange</color>
+					<dateOfIssue>02-02-2012</dateOfIssue>
+					<model>as004</model>
+					<price>400</price>
+					<producer>producer4</producer>
+				</product>
+			</products>
+		</subCategories>
+	</category>
 </catalog>

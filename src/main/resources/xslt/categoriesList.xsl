@@ -6,22 +6,28 @@
 
 	<xsl:template match="/catalog">
 		<ul>
-			<xsl:apply-templates />
+			<xsl:for-each select="/catalog/category">
+				<li>
+					<xsl:variable name="name">
+						<xsl:value-of select="@name" />
+					</xsl:variable>
+					<xsl:variable name="countProducts">
+						<xsl:value-of
+							select="count(/catalog/category[@name=$name]/subCategories/products/product)" />
+					</xsl:variable>
+					<a href="FrontController.do?action=subcategoriesList&amp;name={$name}">
+						<xsl:value-of select="@name" />
+					</a>
+
+					(
+					<xsl:value-of select="$countProducts" />
+					)
+
+				</li>
+			</xsl:for-each>
 		</ul>
 	</xsl:template>
-	<xsl:template match="/catalog/category">
-		<li>
-			<xsl:variable name="name">
-				<xsl:value-of select="@name" />
-			</xsl:variable>
-			<a href="FrontController.do?action=subcategoriesList&amp;name={$name}">
-				<xsl:value-of select="@name" />
-			</a>
 
-			( <xsl:value-of select="count(subCategories)"/> )
-
-		</li>
-	</xsl:template>
 </xsl:stylesheet>
 
 
