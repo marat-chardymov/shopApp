@@ -20,14 +20,14 @@ public class SubcategoriesListAction implements Action {
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
 
-		InputStream styleSheet = CategoriesListAction.class
-				.getResourceAsStream("/subcategoriesList.xsl");
-		InputStream staffFile = CategoriesListAction.class
+		InputStream styleSheet = SubcategoriesListAction.class
+				.getResourceAsStream("/xslt/subcategoriesList.xsl");
+		InputStream catalog = SubcategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 		String name = request.getParameter("name");
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("name", name);
-		HTMLWriter.write(styleSheet, staffFile, resultWriter, paramsMap);
+		HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);
 
 	}
 

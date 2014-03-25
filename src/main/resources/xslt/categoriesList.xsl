@@ -18,7 +18,7 @@
 				<xsl:value-of select="@name" />
 			</a>
 
-			<xsl:value-of select="count(subCategories)"/>
+			( <xsl:value-of select="count(subCategories)"/> )
 
 		</li>
 	</xsl:template>

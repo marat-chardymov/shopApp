@@ -11,10 +11,14 @@
 			<table border="0" cellpadding="6">
 				<xsl:for-each select="/catalog/category[@name=$name]/subCategories">
 					<tr>
-						<td>						
-							<xsl:value-of select="@name" />
+						<td>
+							<xsl:variable name="subcatName">
+								<xsl:value-of select="@name" />
+							</xsl:variable>
+							<a href="FrontController.do?action=productList&amp;catName={$name}&amp;subcatName={$subcatName}">
+								<xsl:value-of select="@name" />
+							</a>
 						</td>
-						
 					</tr>
 				</xsl:for-each>
 			</table>
