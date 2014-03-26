@@ -13,7 +13,7 @@
 					</xsl:variable>
 					<xsl:variable name="countProducts">
 						<xsl:value-of
-							select="count(/catalog/category[@name=$name]/subCategories/products/product)" />
+							select="count(/catalog/category[@name=$name]/subCategories//product)" />
 					</xsl:variable>
 					<a href="FrontController.do?action=subcategoriesList&amp;name={$name}">
 						<xsl:value-of select="@name" />

@@ -35,6 +35,13 @@
 					<price>400</price>
 					<producer>producer4</producer>
 				</product>
+				<product>
+					<color>Sunrise</color>
+					<dateOfIssue>01-01-2009</dateOfIssue>
+					<model>as001</model>
+					<price>9000</price>
+					<producer>producer4</producer>
+				</product>
 			</products>
 		</subCategories>
 	</category>
