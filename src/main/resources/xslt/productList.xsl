@@ -41,7 +41,9 @@
 
             </xsl:for-each>
         </table>
-
+			<a href="FrontController.do?action=newProduct&amp;catName={$catName}&amp;subcatName={$subcatName}">
+								Add new product
+							</a>
     </xsl:template>
 </xsl:stylesheet>
 	

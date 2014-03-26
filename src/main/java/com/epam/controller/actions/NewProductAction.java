@@ -13,19 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
 
-public class ProductListAction implements Action {
+public class NewProductAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
+			throws IOException, ServletException {		
+				
 		PrintWriter resultWriter = response.getWriter();
-		InputStream styleSheet = ProductListAction.class
-				.getResourceAsStream("/xslt/productList.xsl");
+		InputStream styleSheet = NewProductAction.class
+				.getResourceAsStream("/xslt/addingPage.xsl");
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 		
-		String catName = request.getParameter("catName");
-		String subcatName = request.getParameter("subcatName");
+		String catName=request.getParameter("catName");
+		String subcatName=request.getParameter("subcatName");
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);		

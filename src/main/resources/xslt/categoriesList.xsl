@@ -3,7 +3,6 @@
 	version="1.0">
 
 	<xsl:output method="html" />
-
 	<xsl:template match="/catalog">
 		<ul>
 			<xsl:for-each select="/catalog/category">

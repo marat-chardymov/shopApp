@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.epam.controller.actions.CategoriesListAction;
+import com.epam.controller.actions.NewProductAction;
 import com.epam.controller.actions.ProductListAction;
 import com.epam.controller.actions.SubcategoriesListAction;
 
@@ -17,6 +18,7 @@ public class ActionFactory {
 		actions.put("categoriesList", new CategoriesListAction());
 		actions.put("subcategoriesList", new SubcategoriesListAction());
 		actions.put("productList", new ProductListAction());
+		actions.put("newProduct", new NewProductAction());
 	}
 
 	public static Action getAction(HttpServletRequest request) {

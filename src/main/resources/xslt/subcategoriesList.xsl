@@ -3,7 +3,6 @@
 	version="1.0">
 
 	<xsl:output method="html" />
-
 	<xsl:template match="/catalog">
 
 		<xsl:param name="name" />
@@ -15,9 +14,7 @@
 					</xsl:variable>
 					<tr>
 						<td>
-
-							<a
-								href="FrontController.do?action=productList&amp;catName={$name}&amp;subcatName={$subcatName}">
+							<a href="FrontController.do?action=productList&amp;catName={$name}&amp;subcatName={$subcatName}">
 								<xsl:value-of select="@name" />
 							</a>
 						</td>
