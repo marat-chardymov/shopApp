@@ -38,7 +38,17 @@ public class Product {
         this.notInStock = notInStock;
     }
 
-    public String getProducer() {
+    public Product(String model, String color, String dateOfIssue,
+			int price, String producer, boolean notInStock) {
+    	this.producer = producer;
+        this.model = model;
+        this.dateOfIssue = dateOfIssue;
+        this.color = color;
+        this.notInStock = notInStock;
+        this.price=price;
+	}
+
+	public String getProducer() {
         return producer;
     }
 
@@ -82,7 +92,12 @@ public class Product {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
+    
+    public boolean isInStock(){
+    	return !this.notInStock;
+    }
+    
 }

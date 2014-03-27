@@ -3,15 +3,14 @@ package com.epam.util;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
 import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Map;
 
 public class HTMLWriter {
 
 	public static void write(InputStream stylesheet, InputStream data,
-			PrintWriter resultWriter, Map<String, String>... paramsMap) {
+			Writer resultWriter, Map<String, Object>... paramsMap) {
 		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
 		try {

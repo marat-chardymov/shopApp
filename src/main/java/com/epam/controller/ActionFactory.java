@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.epam.controller.actions.CategoriesListAction;
 import com.epam.controller.actions.NewProductAction;
 import com.epam.controller.actions.ProductListAction;
+import com.epam.controller.actions.SaveProductAction;
 import com.epam.controller.actions.SubcategoriesListAction;
 
 public class ActionFactory {
@@ -19,6 +20,7 @@ public class ActionFactory {
 		actions.put("subcategoriesList", new SubcategoriesListAction());
 		actions.put("productList", new ProductListAction());
 		actions.put("newProduct", new NewProductAction());
+		actions.put("saveProduct", new SaveProductAction());
 	}
 
 	public static Action getAction(HttpServletRequest request) {
