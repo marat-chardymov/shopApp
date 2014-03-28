@@ -26,7 +26,7 @@ public class ProductListAction implements Action {
 		
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
-		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);		
 		HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);

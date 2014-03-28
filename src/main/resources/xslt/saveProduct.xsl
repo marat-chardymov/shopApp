@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="2.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:validator="xalan://com.epam.util.Validator">
 
 	<xsl:param name="catName" />
 	<xsl:param name="subcatName" />
@@ -14,11 +16,12 @@
 	<xsl:output method="xml" indent="yes" />
 
 	<xsl:template match="/|node()|@*">
-		
+		<xsl:if test="validator:validate($producer,$model,$color,$dateOfIssue,$price,$notInStock)">
 			<xsl:copy>
 				<xsl:apply-templates select="node()|@*" />
 			</xsl:copy>
-	
+		</xsl:if>
+
 	</xsl:template>
 
 	<xsl:template

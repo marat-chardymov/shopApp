@@ -10,7 +10,7 @@ import java.util.Map;
 public class HTMLWriter {
 
 	public static void write(InputStream stylesheet, InputStream data,
-			Writer resultWriter, Map<String, Object>... paramsMap) {
+			Writer resultWriter, Map<String, String>... paramsMap) {
 		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
 		try {

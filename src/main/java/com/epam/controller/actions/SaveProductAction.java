@@ -29,11 +29,9 @@ public class SaveProductAction implements Action {
 		String model = request.getParameter("model");
 		String color = request.getParameter("color");
 		String dateOfIssue = request.getParameter("dateOfIssue");
-		String priceStr = request.getParameter("price");
-		int price = Integer.valueOf(priceStr);
+		String price = request.getParameter("price");
 		String producer = request.getParameter("producer");
-		String notInStockStr = request.getParameter("notInStock");
-		boolean notInStock = Boolean.valueOf(notInStockStr);
+		String notInStock = request.getParameter("notInStock");
 		
 		InputStream styleSheet = SaveProductAction.class
 				.getResourceAsStream("/xslt/saveProduct.xsl");
@@ -42,7 +40,7 @@ public class SaveProductAction implements Action {
 			
 		Writer resultWriter = new StringWriter();
 
-		Map<String, Object> transParams = new HashMap<String, Object>();
+		Map<String, String> transParams = new HashMap<String, String>();
 		transParams.put("catName", catName);
 		transParams.put("subcatName", subcatName);
 		transParams.put("model", model);
