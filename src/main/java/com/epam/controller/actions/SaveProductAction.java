@@ -52,8 +52,8 @@ public class SaveProductAction implements Action {
 		HTMLWriter.write(styleSheet, catalog, resultWriter, transParams);
 		
 
-		String pathToCatalog = request.getServletContext().getRealPath("WEB-INF/classes/catalog.xml");	
-		File catalogFile=new File(pathToCatalog); //"d:/catalog.xml"
+		//String pathToCatalog = request.getServletContext().getRealPath("d:/catalog.xml");	
+		File catalogFile=new File("d:/catalog.xml"); //"d:/catalog.xml"
 		Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
 		fileWriter.write(resultWriter.toString());
 		fileWriter.flush();
