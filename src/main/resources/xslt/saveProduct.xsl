@@ -29,37 +29,37 @@
 		<xsl:copy>
 			<xsl:apply-templates select="node()|@*" />
 		</xsl:copy>
-		<xsl:call-template name="addProduct" />
 	</xsl:template>
 
 	<xsl:template name="addProduct"
 		match="/catalog/category[@name=$catName]/subCategories[@name=$subcatName]/products">
-		<xsl:copy>
-		<xsl:element name="product">
-			<xsl:element name="producer">
-				<xsl:value-of select="$producer" />
+		<xsl:element name="products">
+			<xsl:apply-templates />
+			<xsl:element name="product">
+				<xsl:element name="producer">
+					<xsl:value-of select="$producer" />
+				</xsl:element>
+				<xsl:element name="model">
+					<xsl:value-of select="$model" />
+				</xsl:element>
+				<xsl:element name="dateOfIssue">
+					<xsl:value-of select="$dateOfIssue" />
+				</xsl:element>
+				<xsl:element name="color">
+					<xsl:value-of select="$color" />
+				</xsl:element>
+				<xsl:choose>
+					<xsl:when test="$notInStock">
+						<xsl:element name="price">
+							<xsl:value-of select="$price" />
+						</xsl:element>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:element name="notInStock" />
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:element>
-			<xsl:element name="model">
-				<xsl:value-of select="$model" />
-			</xsl:element>
-			<xsl:element name="dateOfIssue">
-				<xsl:value-of select="$dateOfIssue" />
-			</xsl:element>
-			<xsl:element name="color">
-				<xsl:value-of select="$color" />
-			</xsl:element>
-			<xsl:choose>
-				<xsl:when test="$notInStock">
-					<xsl:element name="price">
-						<xsl:value-of select="$price" />
-					</xsl:element>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:element name="notInStock" />
-				</xsl:otherwise>
-			</xsl:choose>
 		</xsl:element>
-		</xsl:copy>
 	</xsl:template>
 
 
