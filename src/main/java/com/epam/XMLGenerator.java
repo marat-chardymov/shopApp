@@ -8,7 +8,6 @@ import com.epam.entities.SubCategory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
