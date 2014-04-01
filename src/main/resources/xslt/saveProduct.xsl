@@ -62,7 +62,7 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:element>
-		</xsl:element>.
+		</xsl:element>
 	</xsl:template>
 
 
