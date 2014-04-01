@@ -23,13 +23,12 @@ public class SaveProductAction implements Action {
 		String color = request.getParameter("color");
 		String dateOfIssue = request.getParameter("dateOfIssue");
 		String producer = request.getParameter("producer");
-		String notInStock = request.getParameter("notInStock");
+		String notInStockStr = request.getParameter("notInStock");
 		String price = request.getParameter("price");
-		if("on".equals(notInStock)){
-			notInStock="true";
+		boolean notInStock=false;
+		if("on".equals(notInStockStr)){
+			notInStock=true;
 			price="";
-		}else{
-			notInStock="false";
 		}
 //			notInStock="false";
 //		}else{
@@ -43,7 +42,7 @@ public class SaveProductAction implements Action {
 
 		Writer resultWriter = new StringWriter();
 
-		Map<String, String> transParams = new HashMap<String, String>();
+		Map<String, Object> transParams = new HashMap<String, Object>();
 		transParams.put("catName", catName);
 		transParams.put("subcatName", subcatName);
 		transParams.put("model", model);
@@ -52,7 +51,7 @@ public class SaveProductAction implements Action {
 		transParams.put("price", price);
 		transParams.put("producer", producer);
 		transParams.put("notInStock", notInStock);
-		Map<String, String> errors = new HashMap<String, String>();
+		Map<String, Object> errors = new HashMap<String, Object>();
 
 		HTMLWriter.save(styleSheet, catalog, resultWriter, transParams, errors);
 

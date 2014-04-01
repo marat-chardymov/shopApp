@@ -7,7 +7,7 @@ public class Validator {
 	public boolean wasSuccessful = false;
 
 	public static boolean validate(String producer, String model, String color,
-			String dateOfIssue, String price, String notInStock, Object errors) {
+			String dateOfIssue, String price, boolean notInStock, Object errors) {
 		Map<String, String> err = (Map) errors;
 		// err.put("modelError", "modelError");
 		// err.put("colorError", "colorError");

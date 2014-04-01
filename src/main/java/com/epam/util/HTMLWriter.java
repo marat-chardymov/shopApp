@@ -40,7 +40,7 @@ public class HTMLWriter {
 	}
 
 	public static void save(InputStream stylesheet, InputStream data,
-			Writer resultWriter, Map<String, String>... paramsMap)
+			Writer resultWriter, Map<String, Object>... paramsMap)
 			throws IOException {
 		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
@@ -64,5 +64,7 @@ public class HTMLWriter {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 }
