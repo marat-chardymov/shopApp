@@ -25,8 +25,6 @@ public class SaveProductAction implements Action {
 		String price = request.getParameter("price");
 		String producer = request.getParameter("producer");
 		String notInStock = request.getParameter("notInStock");
-		
-		
 
 		InputStream styleSheet = SaveProductAction.class
 				.getResourceAsStream("/xslt/saveProduct.xsl");
@@ -34,22 +32,22 @@ public class SaveProductAction implements Action {
 				.getResourceAsStream("/catalog.xml");
 
 		Writer resultWriter = new StringWriter();
-		
+
 		Map<String, String> transParams = new HashMap<String, String>();
 		transParams.put("catName", catName);
-		transParams.put("subcatName", subcatName);		
+		transParams.put("subcatName", subcatName);
 		transParams.put("model", model);
 		transParams.put("color", color);
 		transParams.put("dateOfIssue", dateOfIssue);
 		transParams.put("price", price);
 		transParams.put("producer", producer);
 		transParams.put("notInStock", notInStock);
-		Map<String,String> errors = new HashMap<String,String>();
-		
-		HTMLWriter.save(styleSheet, catalog, resultWriter, transParams,errors);
-		
+		Map<String, String> errors = new HashMap<String, String>();
+
+		HTMLWriter.save(styleSheet, catalog, resultWriter, transParams, errors);
+
 		System.out.println(errors.entrySet());
-		if (true) {
+		if (errors.isEmpty()) {
 			String pathToCatalog = request.getServletContext().getRealPath(
 					"WEB-INF/classes/catalog.xml");
 			File catalogFile = new File(pathToCatalog); // "d:/catalog.xml"
@@ -57,14 +55,18 @@ public class SaveProductAction implements Action {
 			fileWriter.write(resultWriter.toString());
 			fileWriter.flush();
 			fileWriter.close();
-			
+
 			String redirect = "FrontController.do?action=productList&catName="
 					+ catName + "&subcatName=" + subcatName;
 			response.sendRedirect(redirect);
-		}else{
-			
+		} else {
+			String forwardPath = "FrontController.do?action=newProduct&catName="
+					+ catName + "&subcatName=" + subcatName;
+			request.setAttribute("productMap", request.getParameterMap());
+			request.getRequestDispatcher(forwardPath)
+					.forward(request, response);
 		}
-		
+
 	}
 
 }
