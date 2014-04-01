@@ -11,7 +11,12 @@ public class Validator {
 			String dateOfIssue, String price, String notInStock,Object errors) {
 		System.out.println(producer);
 		Map<String,String> err=(Map)errors;
-		err.put("sorry", "sorry");
+		err.put("modelError", "modelError");
+		err.put("colorError", "colorError");
+		err.put("dateOfIssueError", "dateOfIssueError");
+		err.put("priceError", "priceError");
+		err.put("producerError", "producerError");
+		err.put("notInStockError", "notInStockError");
 		return true;
 
 	}

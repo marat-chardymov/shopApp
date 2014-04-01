@@ -13,6 +13,13 @@
 		<xsl:param name="producer" />
 		<xsl:param name="notInStock" />
 		
+		<xsl:param name="modelError" />
+		<xsl:param name="colorError" />
+		<xsl:param name="dateOfIssueError" />
+		<xsl:param name="priceError" />
+		<xsl:param name="producerError" />
+		<xsl:param name="notInStockError" />
+		
 		<html>
 			<head>
 				<title>add new product</title>
@@ -21,13 +28,16 @@
 				<form
 					action="FrontController.do?action=saveProduct&amp;catName={$catName}&amp;subcatName={$subcatName}"
 					method="POST">
-					<table style="border: 1px black solid; width: 350px;">
+					<table style="border: none; width: 800px;">
 						<tr>
 							<td>
 								<label for="model">model</label>
 							</td>
 							<td>
 								<input type="text" id="model" name="model" value="{$model}"></input>
+							</td>
+							<td>
+								<xsl:value-of select="$modelError"/>
 							</td>
 						</tr>
 						<tr>
@@ -37,6 +47,9 @@
 							<td>
 								<input type="text" id="color" name="color" value="{$color}"></input>
 							</td>
+							<td>
+								<xsl:value-of select="$colorError"/>
+							</td>
 						</tr>
 						<tr>
 							<td>
@@ -44,6 +57,9 @@
 							</td>
 							<td>
 								<input type="text" id="dateOfIssue" name="dateOfIssue" value="{$dateOfIssue}"></input>
+							</td>
+							<td>
+								<xsl:value-of select="$dateOfIssueError"/>
 							</td>
 						</tr>
 						<tr>
@@ -53,6 +69,9 @@
 							<td>
 								<input type="text" id="price" name="price" value="{$price}"></input>
 							</td>
+							<td>
+								<xsl:value-of select="$priceError"/>
+							</td>
 						</tr>
 						<tr>
 							<td>
@@ -61,15 +80,22 @@
 							<td>
 								<input type="text" id="producer" name="producer" value="{$producer}"></input>
 							</td>
+							<td>
+								<xsl:value-of select="$producerError"/>
+							</td>
 						</tr>
 						<tr>
 							<td>notInStock</td>
 							<td>
 								<input type="text" id="notInStock" name="notInStock" value="{$notInStock}"></input>
 							</td>
+							<td>
+								<xsl:value-of select="$notInStockError"/>
+							</td>
 						</tr>
 					</table>
-					<input type="submit"/>
+					
+					<input type="submit" value="submit"/>
 				</form>
 			</body>
 		</html>

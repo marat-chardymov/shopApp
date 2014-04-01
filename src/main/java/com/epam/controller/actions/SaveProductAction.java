@@ -63,6 +63,7 @@ public class SaveProductAction implements Action {
 			String forwardPath = "FrontController.do?action=newProduct&catName="
 					+ catName + "&subcatName=" + subcatName;
 			request.setAttribute("productMap", request.getParameterMap());
+			request.setAttribute("errors", errors);
 			request.getRequestDispatcher(forwardPath)
 					.forward(request, response);
 		}

@@ -12,7 +12,8 @@ import java.util.Map;
 public class HTMLWriter {
 
 	public static void write(InputStream stylesheet, InputStream data,
-			Writer resultWriter, Map<String, String>... paramsMap) throws IOException {
+			Writer resultWriter, Map<String, String>... paramsMap)
+			throws IOException {
 		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
 		try {
@@ -22,10 +23,14 @@ public class HTMLWriter {
 		}
 		Source text = new StreamSource(data);
 		StreamResult streamResult = new StreamResult(resultWriter);
-		if (paramsMap.length !=0) {
-			for (String key : paramsMap[0].keySet()) {
-				t.setParameter(key, paramsMap[0].get(key));
-			}			
+		if (paramsMap.length != 0) {
+			//set all maps values as transformer parameters
+			for (Map<String, String> map : paramsMap) {
+				for (String key : map.keySet()) {
+					t.setParameter(key, map.get(key));
+				}
+			}
+
 		}
 		try {
 			t.transform(text, streamResult);
@@ -34,9 +39,10 @@ public class HTMLWriter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void save(InputStream stylesheet, InputStream data,
-			Writer resultWriter, Map<String, String>... paramsMap) throws IOException {
+			Writer resultWriter, Map<String, String>... paramsMap)
+			throws IOException {
 		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
 		try {
@@ -46,12 +52,12 @@ public class HTMLWriter {
 		}
 		Source text = new StreamSource(data);
 		StreamResult streamResult = new StreamResult(resultWriter);
-		if (paramsMap.length !=0) {
+		if (paramsMap.length != 0) {
 			for (String key : paramsMap[0].keySet()) {
 				t.setParameter(key, paramsMap[0].get(key));
-			}			
+			}
 		}
-		t.setParameter("errors", (Object)paramsMap[1]);
+		t.setParameter("errors", (Object) paramsMap[1]);
 		try {
 			t.transform(text, streamResult);
 		} catch (TransformerException e) {

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
-import com.epam.util.MapConverter;
+import com.epam.util.MapUtil;
 
 public class NewProductAction implements Action {
 
@@ -31,15 +31,21 @@ public class NewProductAction implements Action {
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
-		
+
 		Map<String, String[]> productMap = (Map<String, String[]>) request
 				.getAttribute("productMap");
-		//if productMap is not null,then previous adding failed cause validation errors
+		Map<String, String> errors = (Map<String, String>) request
+				.getAttribute("errors");
+		// if productMap is not null,then previous adding failed cause
+		// validation errors
 		if (productMap != null) {
-			Map<String, String> youLookReady = MapConverter.convert(productMap);
-			paramsMap = youLookReady;
+			Map<String, String> productProps = MapUtil.convert(productMap);
+			HTMLWriter.write(styleSheet, catalog, resultWriter, productProps,
+					errors);
+
+		} else {
+			HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);
 		}
-		HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);
 	}
 
 }
