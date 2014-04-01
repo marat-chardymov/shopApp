@@ -22,9 +22,19 @@ public class SaveProductAction implements Action {
 		String model = request.getParameter("model");
 		String color = request.getParameter("color");
 		String dateOfIssue = request.getParameter("dateOfIssue");
-		String price = request.getParameter("price");
 		String producer = request.getParameter("producer");
 		String notInStock = request.getParameter("notInStock");
+		String price = request.getParameter("price");
+		if("on".equals(notInStock)){
+			notInStock="true";
+			price="";
+		}else{
+			notInStock="false";
+		}
+//			notInStock="false";
+//		}else{
+//			notInStock="true";
+//		}
 
 		InputStream styleSheet = SaveProductAction.class
 				.getResourceAsStream("/xslt/saveProduct.xsl");

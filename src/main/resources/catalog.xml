@@ -14,7 +14,7 @@
 					<color>Denim</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
 					<model>as002</model>
-					<notInStock>true</notInStock>
+					<notInStock/>
 					<producer>producer2</producer>
 				</product>
 			</products>
@@ -25,8 +25,8 @@
 					<color>Air Force blue</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
 					<model>as003</model>
-					<notInStock>true</notInStock>
 					<producer>producer3</producer>
+					<notInStock/>
 				</product>
 				<product>
 					<color>Carolina blue</color>
@@ -52,7 +52,7 @@
 					<color>ultraviolet</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
 					<model>as003</model>
-					<notInStock>true</notInStock>
+					<notInStock/>
 					<producer>producer3</producer>
 				</product>
 				<product>

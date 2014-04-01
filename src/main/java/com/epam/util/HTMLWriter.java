@@ -30,7 +30,6 @@ public class HTMLWriter {
 					t.setParameter(key, map.get(key));
 				}
 			}
-
 		}
 		try {
 			t.transform(text, streamResult);
