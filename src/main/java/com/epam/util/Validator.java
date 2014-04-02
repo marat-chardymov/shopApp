@@ -8,14 +8,14 @@ public class Validator {
 
 	public static boolean validate(String producer, String model, String color,
 			String dateOfIssue, String price, boolean notInStock, Object errors) {
-		Map<String, String> err = (Map) errors;
-		// err.put("modelError", "modelError");
-		// err.put("colorError", "colorError");
-		// err.put("dateOfIssueError", "dateOfIssueError");
-		// err.put("priceError", "priceError");
-		// err.put("producerError", "producerError");
-		// err.put("notInStockError", "notInStockError");
-		
+		Map<String, String> errorsMap = (Map) errors;
+		validateProducer(producer, errorsMap);
+		validateModel(model, errorsMap);
+		validateColor(color, errorsMap);
+		validateDateOfIssue(dateOfIssue, errorsMap);
+		if (notInStock == false) {
+			validatePrice(price, errorsMap);
+		}
 		return true;
 	}
 
@@ -66,24 +66,13 @@ public class Validator {
 	private static void validatePrice(String price, Map<String, String> errors) {
 		// empty
 		if (price.isEmpty()) {
-			errors.put("priceError", "priceError field shouldn't be empty ");
+			errors.put("priceError", "price field shouldn't be empty or notInStock must be checked");
 			return;
 		}
 		// dd-MM-YYYY pattern
 		if (!price.matches("^-?\\d+$")) {
 			errors.put("priceError", "price field should be integer");
 		}
-	}
-
-	private static void validateNotInStock(String notInStock,
-			Map<String, String> errors) {
-		// empty
-		if (notInStock.isEmpty()) {
-			errors.put("notInStockError", "notInStock field shouldn't be empty ");
-			return;
-		}
-		
-		
 	}
 
 }

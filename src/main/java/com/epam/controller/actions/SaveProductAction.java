@@ -30,10 +30,6 @@ public class SaveProductAction implements Action {
 			notInStock=true;
 			price="";
 		}
-//			notInStock="false";
-//		}else{
-//			notInStock="true";
-//		}
 
 		InputStream styleSheet = SaveProductAction.class
 				.getResourceAsStream("/xslt/saveProduct.xsl");

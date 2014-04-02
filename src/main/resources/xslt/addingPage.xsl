@@ -77,7 +77,7 @@
 						<tr>
 							<td>notInStock</td>
 							<td>
-								<input type="checkbox" name="notInStock" onclick="triggerPrice()" />
+								<input type="checkbox" name="notInStock" onclick="triggerPrice()"/>
 							</td>
 							<td>
 								<xsl:value-of select="$notInStockError" />
@@ -89,7 +89,7 @@
 							</td>
 							<td>
 								<input type="text" name="price" id="price" 
-									value="{$price}" />
+									value="{$price}"/>
 							</td>
 							<td>
 								<xsl:value-of select="$priceError" />
