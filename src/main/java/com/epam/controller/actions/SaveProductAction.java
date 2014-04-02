@@ -2,14 +2,17 @@ package com.epam.controller.actions;
 
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
+import com.epam.util.SingleRWLock;
 import com.epam.util.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 public class SaveProductAction implements Action {
 
@@ -25,10 +28,10 @@ public class SaveProductAction implements Action {
 		String producer = request.getParameter("producer");
 		String notInStockStr = request.getParameter("notInStock");
 		String price = request.getParameter("price");
-		boolean notInStock=false;
-		if("on".equals(notInStockStr)){
-			notInStock=true;
-			price="";
+		boolean notInStock = false;
+		if ("on".equals(notInStockStr)) {
+			notInStock = true;
+			price = "";
 		}
 
 		InputStream styleSheet = SaveProductAction.class
@@ -51,16 +54,21 @@ public class SaveProductAction implements Action {
 
 		HTMLWriter.save(styleSheet, catalog, resultWriter, transParams, errors);
 
-		System.out.println(errors.entrySet());
 		if (errors.isEmpty()) {
 			String pathToCatalog = request.getServletContext().getRealPath(
 					"WEB-INF/classes/catalog.xml");
 			File catalogFile = new File(pathToCatalog); // "d:/catalog.xml"
 			Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
-			fileWriter.write(resultWriter.toString());
-			fileWriter.flush();
-			fileWriter.close();
 
+			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
+			writeLock.lock();
+			try {
+				fileWriter.write(resultWriter.toString());
+				fileWriter.flush();
+				fileWriter.close();
+			} finally {
+				writeLock.unlock();
+			}
 			String redirect = "FrontController.do?action=productList&catName="
 					+ catName + "&subcatName=" + subcatName;
 			response.sendRedirect(redirect);

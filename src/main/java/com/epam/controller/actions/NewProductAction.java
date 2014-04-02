@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
 import com.epam.util.MapUtil;
+import com.epam.util.SingleRWLock;
 
 public class NewProductAction implements Action {
 
@@ -36,6 +38,7 @@ public class NewProductAction implements Action {
 				.getAttribute("productMap");
 		Map<String, String> errors = (Map<String, String>) request
 				.getAttribute("errors");
+
 		// if productMap is not null,then previous adding failed cause
 		// validation errors
 		if (productMap != null) {
@@ -46,6 +49,7 @@ public class NewProductAction implements Action {
 		} else {
 			HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);
 		}
+
 	}
 
 }
