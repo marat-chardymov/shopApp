@@ -41,7 +41,7 @@ public class HTMLWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			readLock.lock();
+			readLock.unlock();
 		}
 	}
 
@@ -72,7 +72,7 @@ public class HTMLWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			readLock.lock();
+			readLock.unlock();
 		}
 	}
 

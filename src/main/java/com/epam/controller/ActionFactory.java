@@ -13,7 +13,7 @@ import com.epam.controller.actions.SubcategoriesListAction;
 
 public class ActionFactory {
 
-	public static Map<String, Action> actions = new HashMap<String, Action>();
+	private static Map<String, Action> actions = new HashMap<String, Action>();
 
 	static {
 		actions.put("categoriesList", new CategoriesListAction());
