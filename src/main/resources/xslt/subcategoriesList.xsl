@@ -7,18 +7,22 @@
 
 		<xsl:param name="name" />
 		<xsl:for-each select="/catalog/category[@name=$name]">
-			<table border="0" cellpadding="6">
+			<html>
+			<head>
+				<title>subcategories list</title>
+				<link rel="stylesheet" href="css/bootstrap.min.css"/>
+			</head>
+			<body>
+			<ul>
 				<xsl:for-each select="/catalog/category[@name=$name]/subCategories">
 					<xsl:variable name="subcatName">
 						<xsl:value-of select="@name" />
 					</xsl:variable>
-					<tr>
-						<td>
+					<li>
 							<a href="FrontController.do?action=productList&amp;catName={$name}&amp;subcatName={$subcatName}">
 								<xsl:value-of select="@name" />
 							</a>
-						</td>
-						<td>
+						
 							<xsl:variable name="countProducts">
 								<xsl:value-of
 									select="count(/catalog/category[@name=$name]/subCategories[@name=$subcatName]//product)" />
@@ -26,10 +30,14 @@
 							(
 							<xsl:value-of select="$countProducts" />
 							)
-						</td>
-					</tr>
+					</li>
 				</xsl:for-each>
-			</table>
+			</ul>
+			<a
+					href="FrontController.do?action=categoriesList"
+					class="btn btn-default">Back</a>
+			</body>
+		</html>
 		</xsl:for-each>
 
 	</xsl:template>

@@ -18,17 +18,17 @@
 		<xsl:param name="dateOfIssueError" />
 		<xsl:param name="priceError" />
 		<xsl:param name="producerError" />
-		<xsl:param name="notInStockError" />
 
 		<html>
 			<head>
 				<title>add new product</title>
+				<link rel="stylesheet" href="css/bootstrap.min.css"/>
 			</head>
 			<body>
 				<form
 					action="FrontController.do?action=saveProduct&amp;catName={$catName}&amp;subcatName={$subcatName}"
 					method="POST">
-					<table style="border: none; width: 800px;">
+					<table style="border: none; width: 800px;" class="table" >
 						<tr>
 							<td>
 								<label for="model">model</label>
@@ -75,12 +75,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td>notInStock</td>
+							<td><label for="notInStock">notInStock</label></td>
 							<td>
 								<input type="checkbox" name="notInStock" onclick="triggerPrice()"/>
 							</td>
 							<td>
-								<xsl:value-of select="$notInStockError" />
 							</td>
 						</tr>
 						<tr>
@@ -96,8 +95,8 @@
 							</td>
 						</tr>
 					</table>
-
-					<input type="submit" value="submit" />
+					<a href="FrontController.do?action=productList&amp;catName={$catName}&amp;subcatName={$subcatName}" class="btn btn-default">Back</a>
+					<input type="submit" value="Submit" class="btn btn-primary"/>
 				</form>
 				<script>
 					function triggerPrice() {
