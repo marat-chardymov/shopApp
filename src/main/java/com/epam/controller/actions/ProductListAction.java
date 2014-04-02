@@ -10,10 +10,12 @@ import java.util.concurrent.locks.Lock;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
 import com.epam.util.SingleRWLock;
+import com.epam.util.TemplatesHolder;
 
 public class ProductListAction implements Action {
 
@@ -21,8 +23,7 @@ public class ProductListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
-		InputStream styleSheet = ProductListAction.class
-				.getResourceAsStream("/xslt/productList.xsl");
+		Templates productListTemp=TemplatesHolder.getTemplates("productList");
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -32,7 +33,7 @@ public class ProductListAction implements Action {
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);
+		HTMLWriter.write(productListTemp, catalog, resultWriter, paramsMap);
 
 	}
 

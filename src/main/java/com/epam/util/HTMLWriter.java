@@ -12,16 +12,14 @@ import java.util.concurrent.locks.Lock;
 
 public class HTMLWriter {
 
-	public static void write(InputStream stylesheet, InputStream data,
+	public static void write(Templates templates, InputStream data,
 			Writer resultWriter, Map<String, String>... paramsMap)
 			throws IOException {
-		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
 		try {
-			t = TransformerFactory.newInstance().newTransformer(styleSource);
-			//Template template=TransformerFactory.newInstance().newTemplates(styleSource);
-		} catch (TransformerConfigurationException e) {
-			e.printStackTrace();
+			t = templates.newTransformer();
+		} catch (TransformerConfigurationException e1) {			
+			e1.printStackTrace();
 		}
 		Source text = new StreamSource(data);
 		StreamResult streamResult = new StreamResult(resultWriter);
@@ -38,20 +36,18 @@ public class HTMLWriter {
 		try {
 			t.transform(text, streamResult);
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			readLock.unlock();
 		}
 	}
 
-	public static void save(InputStream stylesheet, InputStream data,
+	public static void save(Templates templates, InputStream data,
 			Writer resultWriter, Map<String, Object>... paramsMap)
 			throws IOException {
-		StreamSource styleSource = new StreamSource(stylesheet);
 		Transformer t = null;
 		try {
-			t = TransformerFactory.newInstance().newTransformer(styleSource);
+			t = templates.newTransformer();
 		} catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -63,13 +59,12 @@ public class HTMLWriter {
 			}
 		}
 		t.setParameter("errors", (Object) paramsMap[1]);
-		
+
 		Lock readLock = SingleRWLock.INSTANCE.readLock();
 		readLock.lock();
 		try {
 			t.transform(text, streamResult);
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			readLock.unlock();

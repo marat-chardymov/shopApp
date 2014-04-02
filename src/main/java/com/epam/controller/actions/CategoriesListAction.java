@@ -9,10 +9,12 @@ import java.util.concurrent.locks.ReadWriteLock;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
 import com.epam.util.SingleRWLock;
+import com.epam.util.TemplatesHolder;
 
 public class CategoriesListAction implements Action {
 	@Override
@@ -21,12 +23,11 @@ public class CategoriesListAction implements Action {
 
 		PrintWriter resultWriter = response.getWriter();
 
-		InputStream styleSheet = CategoriesListAction.class
-				.getResourceAsStream("/xslt/categoriesList.xsl");
+		Templates catListTemp = TemplatesHolder.getTemplates("categoriesList");
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 
-		HTMLWriter.write(styleSheet, catalog, resultWriter);
+		HTMLWriter.write(catListTemp, catalog, resultWriter);
 
 	}
 }

@@ -10,6 +10,7 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
+import com.epam.controller.actions.CategoriesListAction;
 import com.epam.controller.actions.SubcategoriesListAction;
 
 public class TemplatesHolder {
@@ -19,6 +20,7 @@ public class TemplatesHolder {
 			.newInstance();
 	
 	static {
+				
 		InputStream categoriesListIS = TemplatesHolder.class
 				.getResourceAsStream("/xslt/categoriesList.xsl");
 		putTemplate("categoriesList", categoriesListIS);
@@ -35,7 +37,7 @@ public class TemplatesHolder {
 				.getResourceAsStream("/xslt/saveProduct.xsl");
 		putTemplate("saveProduct", saveProductIS);
 
-		InputStream subcategoriesListIS = SubcategoriesListAction.class
+		InputStream subcategoriesListIS = TemplatesHolder.class
 				.getResourceAsStream("/xslt/subcategoriesList.xsl");
 		putTemplate("subcategoriesList", subcategoriesListIS);
 

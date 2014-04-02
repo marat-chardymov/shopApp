@@ -3,11 +3,13 @@ package com.epam.controller.actions;
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
 import com.epam.util.SingleRWLock;
+import com.epam.util.TemplatesHolder;
 import com.epam.util.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Templates;
 
 import java.io.*;
 import java.util.HashMap;
@@ -34,8 +36,7 @@ public class SaveProductAction implements Action {
 			price = "";
 		}
 
-		InputStream styleSheet = SaveProductAction.class
-				.getResourceAsStream("/xslt/saveProduct.xsl");
+		Templates saveProductTemp = TemplatesHolder.getTemplates("saveProduct");
 		InputStream catalog = SaveProductAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -52,7 +53,8 @@ public class SaveProductAction implements Action {
 		transParams.put("notInStock", notInStock);
 		Map<String, Object> errors = new HashMap<String, Object>();
 
-		HTMLWriter.save(styleSheet, catalog, resultWriter, transParams, errors);
+		HTMLWriter.save(saveProductTemp, catalog, resultWriter, transParams,
+				errors);
 
 		if (errors.isEmpty()) {
 			String pathToCatalog = request.getServletContext().getRealPath(

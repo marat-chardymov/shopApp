@@ -10,11 +10,13 @@ import java.util.concurrent.locks.Lock;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
 import com.epam.util.HTMLWriter;
 import com.epam.util.MapUtil;
 import com.epam.util.SingleRWLock;
+import com.epam.util.TemplatesHolder;
 
 public class NewProductAction implements Action {
 
@@ -23,8 +25,7 @@ public class NewProductAction implements Action {
 			throws IOException, ServletException {
 
 		PrintWriter resultWriter = response.getWriter();
-		InputStream styleSheet = NewProductAction.class
-				.getResourceAsStream("/xslt/addingPage.xsl");
+		Templates addingPageTemp = TemplatesHolder.getTemplates("addingPage");
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -43,11 +44,11 @@ public class NewProductAction implements Action {
 		// validation errors
 		if (productMap != null) {
 			Map<String, String> productProps = MapUtil.convert(productMap);
-			HTMLWriter.write(styleSheet, catalog, resultWriter, productProps,
-					errors);
+			HTMLWriter.write(addingPageTemp, catalog, resultWriter,
+					productProps, errors);
 
 		} else {
-			HTMLWriter.write(styleSheet, catalog, resultWriter, paramsMap);
+			HTMLWriter.write(addingPageTemp, catalog, resultWriter, paramsMap);
 		}
 
 	}
