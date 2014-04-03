@@ -11,21 +11,17 @@
 	<xsl:param name="dateOfIssue" />
 	<xsl:param name="price" />
 	<xsl:param name="notInStock" />
-	
+
 	<xsl:param name="errors" />
+	<xsl:param name="validSkip" />
 
 	<xsl:output method="xml" indent="yes" />
 
 	<xsl:template match="/">
-		<xsl:choose>
-			<xsl:when
-				test="validator:validate($producer,$model,$color,$dateOfIssue,$price,$notInStock,$errors)">
-				<xsl:call-template name="copyNodes" />
-			</xsl:when>
-			<xsl:otherwise>
-
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:if
+			test="$validSkip or validator:validate($producer,$model,$color,$dateOfIssue,$price,$notInStock,$errors)">
+			<xsl:call-template name="copyNodes" />
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="copyNodes" match="/|node()|@*">
@@ -58,7 +54,7 @@
 						</xsl:element>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:element name="notInStock"/>
+						<xsl:element name="notInStock" />
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:element>

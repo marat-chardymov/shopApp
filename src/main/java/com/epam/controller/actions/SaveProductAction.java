@@ -53,21 +53,45 @@ public class SaveProductAction implements Action {
 		transParams.put("notInStock", notInStock);
 		Map<String, Object> errors = new HashMap<String, Object>();
 
+		// get last modified before read from file and write to buffer
+		String pathToCatalog = request.getServletContext().getRealPath(
+				"WEB-INF/classes/catalog.xml");
+		File catalogFile = new File(pathToCatalog); // "d:/catalog.xml"
+		long lastMod = catalogFile.lastModified();
+
+		Boolean validSkip = false;
+		transParams.put("validSkip", validSkip);
+
+		// read from catalog file write to buffer
 		HTMLWriter.save(saveProductTemp, catalog, resultWriter, transParams,
 				errors);
 
-		if (errors.isEmpty()) {
-			String pathToCatalog = request.getServletContext().getRealPath(
-					"WEB-INF/classes/catalog.xml");
-			File catalogFile = new File(pathToCatalog); // "d:/catalog.xml"
-			Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
-
+		if (errors.isEmpty()) {	
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
 			writeLock.lock();
 			try {
-				fileWriter.write(resultWriter.toString());
-				fileWriter.flush();
-				fileWriter.close();
+				long lastModCheck = catalogFile.lastModified();
+				if (lastModCheck == lastMod) {
+					// try to write into the catalog file
+					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
+					fileWriter.write(resultWriter.toString());
+					fileWriter.flush();
+					fileWriter.close();
+				} else {
+					// read from catalog file write to buffer but skip
+					// validation
+					validSkip = true;
+					InputStream catalogIS = SaveProductAction.class
+							.getResourceAsStream("/catalog.xml");
+					HTMLWriter.save(saveProductTemp, catalog, resultWriter,
+							transParams, errors);
+					// try to write into the catalog file
+					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
+					fileWriter.write(resultWriter.toString());
+					fileWriter.flush();
+					fileWriter.close();
+				}
+
 			} finally {
 				writeLock.unlock();
 			}
@@ -75,6 +99,7 @@ public class SaveProductAction implements Action {
 					+ catName + "&subcatName=" + subcatName;
 			response.sendRedirect(redirect);
 		} else {
+			// forward back to adding page with validation errors
 			String forwardPath = "FrontController.do?action=newProduct&catName="
 					+ catName + "&subcatName=" + subcatName;
 			request.setAttribute("productMap", request.getParameterMap());

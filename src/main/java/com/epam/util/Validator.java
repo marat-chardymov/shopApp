@@ -16,7 +16,11 @@ public class Validator {
 		if (notInStock == false) {
 			validatePrice(price, errorsMap);
 		}
-		return true;
+		if (errorsMap.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private static void validateProducer(String producer,
@@ -66,7 +70,8 @@ public class Validator {
 	private static void validatePrice(String price, Map<String, String> errors) {
 		// empty
 		if (price.isEmpty()) {
-			errors.put("priceError", "price field shouldn't be empty or notInStock must be checked");
+			errors.put("priceError",
+					"price field shouldn't be empty or notInStock must be checked");
 			return;
 		}
 		// dd-MM-YYYY pattern
