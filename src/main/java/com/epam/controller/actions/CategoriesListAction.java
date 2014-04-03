@@ -26,7 +26,6 @@ public class CategoriesListAction implements Action {
 		Templates catListTemp = TemplatesHolder.getTemplates("categoriesList");
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
-
 		HTMLWriter.write(catListTemp, catalog, resultWriter);
 
 	}

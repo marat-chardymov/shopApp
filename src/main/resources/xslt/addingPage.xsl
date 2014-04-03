@@ -22,82 +22,91 @@
 		<html>
 			<head>
 				<title>add new product</title>
-				<link rel="stylesheet" href="css/bootstrap.min.css"/>
+				<link rel="stylesheet" href="css/bootstrap.min.css" />
+				<link rel="stylesheet" href="css/addingPage.css" />
 			</head>
 			<body>
-				<form
-					action="FrontController.do?action=saveProduct&amp;catName={$catName}&amp;subcatName={$subcatName}"
-					method="POST">
-					<table style="border: none; width: 800px;" class="table" >
-						<tr>
-							<td>
-								<label for="model">model</label>
-							</td>
-							<td>
-								<input type="text" id="model" name="model" value="{$model}"></input>
-							</td>
-							<td>
-								<xsl:value-of select="$modelError" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="color">color</label>
-							</td>
-							<td>
-								<input type="text" id="color" name="color" value="{$color}"></input>
-							</td>
-							<td>
-								<xsl:value-of select="$colorError" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="dateOfIssue">date Of Issue</label>
-							</td>
-							<td>
-								<input type="text" id="dateOfIssue" name="dateOfIssue"
-									value="{$dateOfIssue}"></input>
-							</td>
-							<td>
-								<xsl:value-of select="$dateOfIssueError" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="producer">producer</label>
-							</td>
-							<td>
-								<input type="text" id="producer" name="producer" value="{$producer}"></input>
-							</td>
-							<td>
-								<xsl:value-of select="$producerError" />
-							</td>
-						</tr>
-						<tr>
-							<td><label for="notInStock">notInStock</label></td>
-							<td>
-								<input type="checkbox" name="notInStock" onclick="triggerPrice()"/>
-							</td>
-							<td>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label for="price">price</label>
-							</td>
-							<td>
-								<input type="text" name="price" id="price" 
-									value="{$price}"/>
-							</td>
-							<td>
-								<xsl:value-of select="$priceError" />
-							</td>
-						</tr>
-					</table>
-					<a href="FrontController.do?action=productList&amp;catName={$catName}&amp;subcatName={$subcatName}" class="btn btn-default">Back</a>
-					<input type="submit" value="Submit" class="btn btn-primary"/>
-				</form>
+				<div id='form'>
+					<form
+						action="FrontController.do?action=saveProduct&amp;catName={$catName}&amp;subcatName={$subcatName}"
+						method="POST">
+						<h4>Please,fill in the form below. Fields shouldn't be empty</h4>
+
+						<table style="border: none; width: 800px;" class="table">
+							<tr>
+								<td>
+									<label for="model">model (2 letters and 3 digits)</label>
+								</td>
+								<td>
+									<input type="text" id="model" name="model" value="{$model}"></input>
+								</td>
+								<td>
+									<xsl:value-of select="$modelError" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="color">color</label>
+								</td>
+								<td>
+									<input type="text" id="color" name="color" value="{$color}"></input>
+								</td>
+								<td>
+									<xsl:value-of select="$colorError" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="dateOfIssue">date of issue (dd-MM-YYYY)</label>
+								</td>
+								<td>
+									<input type="text" id="dateOfIssue" name="dateOfIssue"
+										value="{$dateOfIssue}"></input>
+								</td>
+								<td>
+									<xsl:value-of select="$dateOfIssueError" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="producer">producer</label>
+								</td>
+								<td>
+									<input type="text" id="producer" name="producer" value="{$producer}"></input>
+								</td>
+								<td>
+									<xsl:value-of select="$producerError" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="notInStock">notInStock</label>
+								</td>
+								<td>
+									<input type="checkbox" name="notInStock" onclick="triggerPrice()" />
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label for="price">price</label>
+								</td>
+								<td>
+									<input type="text" name="price" id="price" value="{$price}" />
+								</td>
+								<td>
+									<xsl:value-of select="$priceError" />
+								</td>
+							</tr>
+						</table>
+						<a
+							href="FrontController.do?action=productList&amp;catName={$catName}&amp;subcatName={$subcatName}"
+							class="btn btn-default" id="cancel">Back</a>
+						<input type="submit" value="Save" class="btn btn-default" id="save"/>
+
+					</form>
+				</div>
 				<script>
 					function triggerPrice() {
 					document.getElementById("price").disabled =

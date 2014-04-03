@@ -1,0 +1,14 @@
+div#form {
+	margin-left: 100px;
+	margin-top: 50px;
+	display: inline-block;
+	text-align: left;
+}
+
+a#cancel {
+	float: left;
+}
+
+#save {
+	margin-left: 10px;	
+}
