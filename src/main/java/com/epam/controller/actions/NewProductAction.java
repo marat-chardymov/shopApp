@@ -31,19 +31,19 @@ public class NewProductAction implements Action {
 
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
-		Map<String, String> paramsMap = new HashMap<String, String>();
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
 		Map<String, String[]> productMap = (Map<String, String[]>) request
 				.getAttribute("productMap");
-		Map<String, String> errors = (Map<String, String>) request
+		Map<String, Object> errors = (Map<String, Object>) request
 				.getAttribute("errors");
 
 		// if productMap is not null,then previous adding failed cause
 		// validation errors
 		if (productMap != null) {
-			Map<String, String> productProps = MapUtil.convert(productMap);
+			Map<String, Object> productProps = MapUtil.convert(productMap);
 			TransformerResultPrinter.write(addingPagePath, catalog,
 					resultWriter, productProps, errors);
 

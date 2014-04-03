@@ -51,6 +51,7 @@ public class SaveProductAction implements Action {
 		transParams.put("producer", producer);
 		transParams.put("notInStock", notInStock);
 		Map<String, Object> errors = new HashMap<String, Object>();
+		transParams.put("errors", errors);
 
 		// get last modified before read from file and write to buffer
 		String pathToCatalog = request.getServletContext().getRealPath(
@@ -62,8 +63,7 @@ public class SaveProductAction implements Action {
 		transParams.put("validSkip", validSkip);
 
 		// read from catalog file write to buffer
-		TransformerResultPrinter.save(saveProductPath, catalog, resultWriter, transParams,
-				errors);
+		TransformerResultPrinter.write(saveProductPath, catalog, resultWriter, transParams);
 
 		if (errors.isEmpty()) {	
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
@@ -82,8 +82,8 @@ public class SaveProductAction implements Action {
 					validSkip = true;
 					InputStream catalogIS = SaveProductAction.class
 							.getResourceAsStream("/catalog.xml");
-					TransformerResultPrinter.save(saveProductPath, catalog, resultWriter,
-							transParams, errors);
+					TransformerResultPrinter.write(saveProductPath, catalog, resultWriter,
+							transParams);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
 					fileWriter.write(resultWriter.toString());

@@ -13,7 +13,7 @@ import java.util.concurrent.locks.Lock;
 public class TransformerResultPrinter {
 
 	public static void write(String keyPath, InputStream data,
-			Writer resultWriter, Map<String, String>... paramsMap)
+			Writer resultWriter, Map<String, Object>... paramsMap)
 			throws IOException {
 		Transformer t = null;
 		try {
@@ -26,7 +26,7 @@ public class TransformerResultPrinter {
 		StreamResult streamResult = new StreamResult(resultWriter);
 		if (paramsMap.length != 0) {
 			// set all maps values as transformer parameters
-			for (Map<String, String> map : paramsMap) {
+			for (Map<String, Object> map : paramsMap) {
 				for (String key : map.keySet()) {
 					t.setParameter(key, map.get(key));
 				}
@@ -42,35 +42,4 @@ public class TransformerResultPrinter {
 			readLock.unlock();
 		}
 	}
-
-	public static void save(String keyPath, InputStream data,
-			Writer resultWriter, Map<String, Object>... paramsMap)
-			throws IOException {
-		Transformer t = null;
-		try {
-			t = TemplatesHolder.getTransformer(keyPath);
-		} catch (TransformerConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Source text = new StreamSource(data);
-		StreamResult streamResult = new StreamResult(resultWriter);
-		if (paramsMap.length != 0) {
-			for (String key : paramsMap[0].keySet()) {
-				t.setParameter(key, paramsMap[0].get(key));
-			}
-		}
-		t.setParameter("errors", (Object) paramsMap[1]);
-
-		Lock readLock = SingleRWLock.INSTANCE.readLock();
-		readLock.lock();
-		try {
-			t.transform(text, streamResult);
-		} catch (TransformerException e) {
-			e.printStackTrace();
-		} finally {
-			readLock.unlock();
-		}
-	}
-
 }

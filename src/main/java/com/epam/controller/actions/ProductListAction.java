@@ -29,7 +29,7 @@ public class ProductListAction implements Action {
 
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
-		Map<String, String> paramsMap = new HashMap<String, String>();
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 

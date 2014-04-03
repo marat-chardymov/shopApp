@@ -26,7 +26,7 @@ public class SubcategoriesListAction implements Action {
 		InputStream catalog = SubcategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 		String name = request.getParameter("name");
-		Map<String, String> paramsMap = new HashMap<String, String>();
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("name", name);
 		TransformerResultPrinter.write(subcatListPath, catalog, resultWriter,
 				paramsMap);
