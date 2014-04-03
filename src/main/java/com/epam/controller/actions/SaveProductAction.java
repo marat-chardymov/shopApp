@@ -1,7 +1,7 @@
 package com.epam.controller.actions;
 
 import com.epam.controller.Action;
-import com.epam.util.HTMLWriter;
+import com.epam.util.TransformerResultPrinter;
 import com.epam.util.SingleRWLock;
 import com.epam.util.TemplatesHolder;
 import com.epam.util.Validator;
@@ -35,8 +35,7 @@ public class SaveProductAction implements Action {
 			notInStock = true;
 			price = "";
 		}
-
-		Templates saveProductTemp = TemplatesHolder.getTemplates("saveProduct");
+		String saveProductPath="/xslt/saveProduct.xsl";
 		InputStream catalog = SaveProductAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -63,7 +62,7 @@ public class SaveProductAction implements Action {
 		transParams.put("validSkip", validSkip);
 
 		// read from catalog file write to buffer
-		HTMLWriter.save(saveProductTemp, catalog, resultWriter, transParams,
+		TransformerResultPrinter.save(saveProductPath, catalog, resultWriter, transParams,
 				errors);
 
 		if (errors.isEmpty()) {	
@@ -83,7 +82,7 @@ public class SaveProductAction implements Action {
 					validSkip = true;
 					InputStream catalogIS = SaveProductAction.class
 							.getResourceAsStream("/catalog.xml");
-					HTMLWriter.save(saveProductTemp, catalog, resultWriter,
+					TransformerResultPrinter.save(saveProductPath, catalog, resultWriter,
 							transParams, errors);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");

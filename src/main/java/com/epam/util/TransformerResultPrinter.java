@@ -10,15 +10,16 @@ import java.io.Writer;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
-public class HTMLWriter {
+public class TransformerResultPrinter {
 
-	public static void write(Templates templates, InputStream data,
+	public static void write(String keyPath, InputStream data,
 			Writer resultWriter, Map<String, String>... paramsMap)
 			throws IOException {
 		Transformer t = null;
 		try {
-			t = templates.newTransformer();
-		} catch (TransformerConfigurationException e1) {			
+			t = TemplatesHolder.getTransformer(keyPath);
+		} catch (TransformerConfigurationException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Source text = new StreamSource(data);
@@ -42,14 +43,15 @@ public class HTMLWriter {
 		}
 	}
 
-	public static void save(Templates templates, InputStream data,
+	public static void save(String keyPath, InputStream data,
 			Writer resultWriter, Map<String, Object>... paramsMap)
 			throws IOException {
 		Transformer t = null;
 		try {
-			t = templates.newTransformer();
-		} catch (TransformerConfigurationException e) {
-			e.printStackTrace();
+			t = TemplatesHolder.getTransformer(keyPath);
+		} catch (TransformerConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		Source text = new StreamSource(data);
 		StreamResult streamResult = new StreamResult(resultWriter);

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
-import com.epam.util.HTMLWriter;
+import com.epam.util.TransformerResultPrinter;
 import com.epam.util.SingleRWLock;
 import com.epam.util.TemplatesHolder;
 
@@ -23,7 +23,7 @@ public class ProductListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
-		Templates productListTemp=TemplatesHolder.getTemplates("productList");
+		String productListPath = "/xslt/productList.xsl";
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -33,7 +33,8 @@ public class ProductListAction implements Action {
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		HTMLWriter.write(productListTemp, catalog, resultWriter, paramsMap);
+		TransformerResultPrinter.write(productListPath, catalog, resultWriter,
+				paramsMap);
 
 	}
 

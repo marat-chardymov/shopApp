@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
-import com.epam.util.HTMLWriter;
+import com.epam.util.TransformerResultPrinter;
 import com.epam.util.SingleRWLock;
 import com.epam.util.TemplatesHolder;
 
@@ -22,11 +22,10 @@ public class CategoriesListAction implements Action {
 			throws IOException, ServletException {
 
 		PrintWriter resultWriter = response.getWriter();
-
-		Templates catListTemp = TemplatesHolder.getTemplates("categoriesList");
+		String categoriesListPath="/xslt/categoriesList.xsl";
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
-		HTMLWriter.write(catListTemp, catalog, resultWriter);
+		TransformerResultPrinter.write(categoriesListPath, catalog, resultWriter);
 
 	}
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
-import com.epam.util.HTMLWriter;
+import com.epam.util.TransformerResultPrinter;
 import com.epam.util.TemplatesHolder;
 
 public class SubcategoriesListAction implements Action {
@@ -22,14 +22,14 @@ public class SubcategoriesListAction implements Action {
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
 
-		Templates subcatListTemp = TemplatesHolder
-				.getTemplates("subcategoriesList");
+		String subcatListPath = "/xslt/subcategoriesList.xsl";
 		InputStream catalog = SubcategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 		String name = request.getParameter("name");
 		Map<String, String> paramsMap = new HashMap<String, String>();
 		paramsMap.put("name", name);
-		HTMLWriter.write(subcatListTemp, catalog, resultWriter, paramsMap);
+		TransformerResultPrinter.write(subcatListPath, catalog, resultWriter,
+				paramsMap);
 
 	}
 
