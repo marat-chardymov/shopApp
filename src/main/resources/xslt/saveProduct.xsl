@@ -20,13 +20,12 @@
 
 	<xsl:param name="validSkip" />
 
-	<xsl:output method="xml" indent="yes" />
 
 	<xsl:template match="/">
 		<xsl:choose>
 			<xsl:when
 				test="$validSkip or validator:validate($producer,$model,$color,$dateOfIssue,$price,$notInStock,
-			$producerError,$modelError,$colorError,$dateOfIssueError,$priceError)">
+			$modelError,$colorError,$dateOfIssueError,$priceError,$producerError)">
 				<xsl:call-template name="copyNodes" />
 			</xsl:when>
 			<xsl:otherwise>

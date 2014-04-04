@@ -16,7 +16,7 @@ import com.epam.util.PathsHolder;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class NewProductAction implements Action {
-	
+
 	public static final String ADDING_PAGE_PATH = "/xslt/addingPage.xsl";
 
 	@Override
@@ -24,29 +24,15 @@ public class NewProductAction implements Action {
 			throws IOException, ServletException {
 
 		PrintWriter resultWriter = response.getWriter();
-		
+
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		Map<String, String[]> productMap = (Map<String, String[]>) request
-				.getAttribute("productMap");
-		Map<String, Object> errors = (Map<String, Object>) request
-				.getAttribute("errors");
-
-		// if productMap is not null,then previous adding failed cause
-		// validation errors
-		if (productMap != null) {
-			Map<String, Object> productProps = MapUtil.convert(productMap);
-			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, PathsHolder.CATALOG,
-					resultWriter, productProps, errors);
-
-		} else {
-			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, PathsHolder.CATALOG,
-					resultWriter, paramsMap);
-		}
+		RLockTransformerResultPrinter.write(ADDING_PAGE_PATH,
+				PathsHolder.CATALOG, resultWriter, paramsMap);
 
 	}
 
