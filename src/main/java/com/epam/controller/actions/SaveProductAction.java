@@ -20,7 +20,7 @@ import com.epam.util.SingleRWLock;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class SaveProductAction implements Action {
-	
+
 	public static final String SAVE_PRODUCT_PATH = "/xslt/saveProduct.xsl";
 
 	@Override
@@ -51,8 +51,18 @@ public class SaveProductAction implements Action {
 		transParams.put("price", price);
 		transParams.put("producer", producer);
 		transParams.put("notInStock", notInStock);
-		Map<String, Object> errors = new HashMap<String, Object>();
-		transParams.put("errors", errors);
+
+		StringBuffer modelError = new StringBuffer();
+		StringBuffer colorError = new StringBuffer();
+		StringBuffer dateOfIssueError = new StringBuffer();
+		StringBuffer priceError = new StringBuffer();
+		StringBuffer producerError = new StringBuffer();
+
+		transParams.put("modelError", (Object)modelError);
+		transParams.put("colorError", (Object)colorError);
+		transParams.put("dateOfIssueError", (Object)dateOfIssueError);
+		transParams.put("priceError", (Object)priceError);
+		transParams.put("producerError", (Object)producerError);
 
 		// get last modified before read from file and write to buffer
 		String pathToCatalog = request.getServletContext().getRealPath(
@@ -64,10 +74,11 @@ public class SaveProductAction implements Action {
 		transParams.put("validSkip", validSkip);
 
 		// read from catalog file write to buffer
-		RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH, PathsHolder.CATALOG,
-				resultWriter, transParams);
+		RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH,
+				PathsHolder.CATALOG, resultWriter, transParams);
 
-		if (errors.isEmpty()) {
+		if (noErrors(modelError, colorError, dateOfIssueError, priceError,
+				producerError)) {
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
 			writeLock.lock();
 			try {
@@ -101,14 +112,19 @@ public class SaveProductAction implements Action {
 			response.sendRedirect(redirect);
 		} else {
 			// forward back to adding page with validation errors
-			String forwardPath = "FrontController.do?action=newProduct&catName="
-					+ catName + "&subcatName=" + subcatName;
-			request.setAttribute("productMap", request.getParameterMap());
-			request.setAttribute("errors", errors);
-			request.getRequestDispatcher(forwardPath)
-					.forward(request, response);
+			Writer writer = response.getWriter();
+			writer.write(resultWriter.toString());
 		}
 
+	}
+
+	private boolean noErrors(StringBuffer... errorsStr) {
+		for (StringBuffer err : errorsStr) {
+			if (!err.toString().isEmpty()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

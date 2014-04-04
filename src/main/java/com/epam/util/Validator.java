@@ -7,76 +7,75 @@ public class Validator {
 	public boolean wasSuccessful = false;
 
 	public static boolean validate(String producer, String model, String color,
-			String dateOfIssue, String price, boolean notInStock, Object errors) {
-		Map<String, String> errorsMap = (Map) errors;
-		validateProducer(producer, errorsMap);
-		validateModel(model, errorsMap);
-		validateColor(color, errorsMap);
-		validateDateOfIssue(dateOfIssue, errorsMap);
+			String dateOfIssue, String price, boolean notInStock,
+			Object modelError, Object colorError, Object dateOfIssueError,
+			Object priceError, Object producerError) {
+		
+		validateProducer(producer, (StringBuffer)producerError);
+		validateModel(model, (StringBuffer)modelError);
+		validateColor(color, (StringBuffer)colorError);
+		validateDateOfIssue(dateOfIssue, (StringBuffer)dateOfIssueError);
 		if (notInStock == false) {
-			validatePrice(price, errorsMap);
+			validatePrice(price, (StringBuffer)priceError);
 		}
-		if (errorsMap.isEmpty()) {
+		if (producerError.toString().isEmpty() && modelError.toString().isEmpty()
+				&& colorError.toString().isEmpty() && dateOfIssueError.toString().isEmpty()
+				&& priceError.toString().isEmpty()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private static void validateProducer(String producer,
-			Map<String, String> errors) {
+	private static void validateProducer(String producer, StringBuffer producerError) {
 		// empty
 		if (producer.isEmpty()) {
-			errors.put("producerError", "producer field shouldn't be empty");
+			producerError.append("producer field shouldn't be empty");
 		}
 	}
 
-	private static void validateModel(String model, Map<String, String> errors) {
+	private static void validateModel(String model, StringBuffer modelError) {
 		// empty
 		if (model.isEmpty()) {
-			errors.put("modelError", "model field shouldn't be empty ");
+			modelError.append("model field shouldn't be empty ");
 			return;
 		}
 		// 2 letters 3 digits pattern
 		if (!model.matches("^[a-zA-Z][a-zA-Z][0-9][0-9][0-9]$")) {
-			errors.put("modelError",
-					"model field should consist of two letters and three digits");
+			modelError.append("model field should consist of two letters and three digits");
 		}
 	}
 
-	private static void validateColor(String color, Map<String, String> errors) {
+	private static void validateColor(String color, StringBuffer colorError) {
 		// empty
 		if (color.isEmpty()) {
-			errors.put("colorError", "color field shouldn't be empty ");
+			colorError.append("color field shouldn't be empty ");
 		}
 	}
 
 	private static void validateDateOfIssue(String dateOfIssue,
-			Map<String, String> errors) {
+			StringBuffer dateOfIssueError) {
 		// empty
 		if (dateOfIssue.isEmpty()) {
-			errors.put("dateOfIssueError",
-					"dateOfIssue field shouldn't be empty ");
+			dateOfIssueError.append("dateOfIssue field shouldn't be empty ");
 			return;
 		}
 		// dd-MM-YYYY pattern
 		if (!dateOfIssue
 				.matches("(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)")) {
-			errors.put("dateOfIssueError",
-					"dateOfIssueError field should match pattern dd-MM-YYYY");
+			dateOfIssueError.append("dateOfIssueError field should match pattern dd-MM-YYYY");
 		}
 	}
 
-	private static void validatePrice(String price, Map<String, String> errors) {
+	private static void validatePrice(String price, StringBuffer priceError) {
 		// empty
 		if (price.isEmpty()) {
-			errors.put("priceError",
-					"price field shouldn't be empty or notInStock must be checked");
+			priceError.append("price field shouldn't be empty or notInStock must be checked");
 			return;
 		}
 		// dd-MM-YYYY pattern
 		if (!price.matches("^-?\\d+$")) {
-			errors.put("priceError", "price field should be integer");
+			priceError.append("price field should be integer");
 		}
 	}
 
