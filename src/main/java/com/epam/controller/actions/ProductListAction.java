@@ -5,17 +5,13 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
-import com.epam.util.TransformerResultPrinter;
-import com.epam.util.SingleRWLock;
-import com.epam.util.TemplatesHolder;
+import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class ProductListAction implements Action {
 
@@ -33,7 +29,7 @@ public class ProductListAction implements Action {
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		TransformerResultPrinter.write(productListPath, catalog, resultWriter,
+		RLockTransformerResultPrinter.write(productListPath, catalog, resultWriter,
 				paramsMap);
 
 	}

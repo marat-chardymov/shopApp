@@ -1,8 +1,10 @@
-package com.epam.util;
+package com.epam.util.transformation;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import com.epam.util.TemplatesHolder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +21,6 @@ public class TransformerResultPrinter {
 		try {
 			t = TemplatesHolder.getTransformer(keyPath);
 		} catch (TransformerConfigurationException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		Source text = new StreamSource(data);
@@ -32,14 +33,10 @@ public class TransformerResultPrinter {
 				}
 			}
 		}
-		Lock readLock = SingleRWLock.INSTANCE.readLock();
-		readLock.lock();
 		try {
 			t.transform(text, streamResult);
 		} catch (TransformerException e) {
 			e.printStackTrace();
-		} finally {
-			readLock.unlock();
-		}
+		} 
 	}
 }

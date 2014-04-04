@@ -5,18 +5,14 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
-import com.epam.util.TransformerResultPrinter;
 import com.epam.util.MapUtil;
-import com.epam.util.SingleRWLock;
-import com.epam.util.TemplatesHolder;
+import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class NewProductAction implements Action {
 
@@ -44,11 +40,11 @@ public class NewProductAction implements Action {
 		// validation errors
 		if (productMap != null) {
 			Map<String, Object> productProps = MapUtil.convert(productMap);
-			TransformerResultPrinter.write(addingPagePath, catalog,
+			RLockTransformerResultPrinter.write(addingPagePath, catalog,
 					resultWriter, productProps, errors);
 
 		} else {
-			TransformerResultPrinter.write(addingPagePath, catalog,
+			RLockTransformerResultPrinter.write(addingPagePath, catalog,
 					resultWriter, paramsMap);
 		}
 

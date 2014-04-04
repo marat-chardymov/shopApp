@@ -1,20 +1,22 @@
 package com.epam.controller.actions;
 
-import com.epam.controller.Action;
-import com.epam.util.TransformerResultPrinter;
-import com.epam.util.SingleRWLock;
-import com.epam.util.TemplatesHolder;
-import com.epam.util.Validator;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Templates;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
+import com.epam.controller.Action;
+import com.epam.util.SingleRWLock;
+import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class SaveProductAction implements Action {
 
@@ -63,7 +65,7 @@ public class SaveProductAction implements Action {
 		transParams.put("validSkip", validSkip);
 
 		// read from catalog file write to buffer
-		TransformerResultPrinter.write(saveProductPath, catalog, resultWriter, transParams);
+		RLockTransformerResultPrinter.write(saveProductPath, catalog, resultWriter, transParams);
 
 		if (errors.isEmpty()) {	
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
@@ -82,7 +84,7 @@ public class SaveProductAction implements Action {
 					validSkip = true;
 					InputStream catalogIS = SaveProductAction.class
 							.getResourceAsStream("/catalog.xml");
-					TransformerResultPrinter.write(saveProductPath, catalog, resultWriter,
+					RLockTransformerResultPrinter.write(saveProductPath, catalog, resultWriter,
 							transParams);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");

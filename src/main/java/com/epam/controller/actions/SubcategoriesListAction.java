@@ -9,11 +9,9 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Templates;
 
 import com.epam.controller.Action;
-import com.epam.util.TransformerResultPrinter;
-import com.epam.util.TemplatesHolder;
+import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class SubcategoriesListAction implements Action {
 
@@ -28,7 +26,7 @@ public class SubcategoriesListAction implements Action {
 		String name = request.getParameter("name");
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("name", name);
-		TransformerResultPrinter.write(subcatListPath, catalog, resultWriter,
+		RLockTransformerResultPrinter.write(subcatListPath, catalog, resultWriter,
 				paramsMap);
 
 	}
