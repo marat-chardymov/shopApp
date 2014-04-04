@@ -15,13 +15,15 @@ import com.epam.util.MapUtil;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class NewProductAction implements Action {
+	
+	public static final String ADDING_PAGE_PATH = "/xslt/addingPage.xsl";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
 		PrintWriter resultWriter = response.getWriter();
-		String addingPagePath = "/xslt/addingPage.xsl";
+		
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -40,11 +42,11 @@ public class NewProductAction implements Action {
 		// validation errors
 		if (productMap != null) {
 			Map<String, Object> productProps = MapUtil.convert(productMap);
-			RLockTransformerResultPrinter.write(addingPagePath, catalog,
+			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, catalog,
 					resultWriter, productProps, errors);
 
 		} else {
-			RLockTransformerResultPrinter.write(addingPagePath, catalog,
+			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, catalog,
 					resultWriter, paramsMap);
 		}
 

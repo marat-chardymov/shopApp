@@ -15,11 +15,13 @@ import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class ProductListAction implements Action {
 
+	public static final String PRODUCT_LIST_PATH = "/xslt/productList.xsl";
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
-		String productListPath = "/xslt/productList.xsl";
+
 		InputStream catalog = CategoriesListAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -29,8 +31,8 @@ public class ProductListAction implements Action {
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		RLockTransformerResultPrinter.write(productListPath, catalog, resultWriter,
-				paramsMap);
+		RLockTransformerResultPrinter.write(PRODUCT_LIST_PATH, catalog,
+				resultWriter, paramsMap);
 
 	}
 

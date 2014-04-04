@@ -19,6 +19,8 @@ import com.epam.util.SingleRWLock;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class SaveProductAction implements Action {
+	
+	public static final String SAVE_PRODUCT_PATH = "/xslt/saveProduct.xsl";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response)
@@ -37,7 +39,7 @@ public class SaveProductAction implements Action {
 			notInStock = true;
 			price = "";
 		}
-		String saveProductPath="/xslt/saveProduct.xsl";
+
 		InputStream catalog = SaveProductAction.class
 				.getResourceAsStream("/catalog.xml");
 
@@ -65,9 +67,10 @@ public class SaveProductAction implements Action {
 		transParams.put("validSkip", validSkip);
 
 		// read from catalog file write to buffer
-		RLockTransformerResultPrinter.write(saveProductPath, catalog, resultWriter, transParams);
+		RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH, catalog,
+				resultWriter, transParams);
 
-		if (errors.isEmpty()) {	
+		if (errors.isEmpty()) {
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
 			writeLock.lock();
 			try {
@@ -84,8 +87,8 @@ public class SaveProductAction implements Action {
 					validSkip = true;
 					InputStream catalogIS = SaveProductAction.class
 							.getResourceAsStream("/catalog.xml");
-					RLockTransformerResultPrinter.write(saveProductPath, catalog, resultWriter,
-							transParams);
+					RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH,
+							catalog, resultWriter, transParams);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
 					fileWriter.write(resultWriter.toString());
