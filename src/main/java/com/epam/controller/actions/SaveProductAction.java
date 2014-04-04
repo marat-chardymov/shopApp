@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.controller.Action;
+import com.epam.util.PathsHolder;
 import com.epam.util.SingleRWLock;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
@@ -39,10 +40,6 @@ public class SaveProductAction implements Action {
 			notInStock = true;
 			price = "";
 		}
-
-		InputStream catalog = SaveProductAction.class
-				.getResourceAsStream("/catalog.xml");
-
 		Writer resultWriter = new StringWriter();
 
 		Map<String, Object> transParams = new HashMap<String, Object>();
@@ -67,7 +64,7 @@ public class SaveProductAction implements Action {
 		transParams.put("validSkip", validSkip);
 
 		// read from catalog file write to buffer
-		RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH, catalog,
+		RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH, PathsHolder.CATALOG,
 				resultWriter, transParams);
 
 		if (errors.isEmpty()) {
@@ -88,7 +85,7 @@ public class SaveProductAction implements Action {
 					InputStream catalogIS = SaveProductAction.class
 							.getResourceAsStream("/catalog.xml");
 					RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH,
-							catalog, resultWriter, transParams);
+							PathsHolder.CATALOG, resultWriter, transParams);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
 					fileWriter.write(resultWriter.toString());

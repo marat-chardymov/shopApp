@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.controller.Action;
+import com.epam.util.PathsHolder;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class SubcategoriesListAction implements Action {
@@ -21,14 +22,10 @@ public class SubcategoriesListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
-
-		
-		InputStream catalog = SubcategoriesListAction.class
-				.getResourceAsStream("/catalog.xml");
 		String name = request.getParameter("name");
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("name", name);
-		RLockTransformerResultPrinter.write(SUBCAT_LIST_PATH, catalog, resultWriter,
+		RLockTransformerResultPrinter.write(SUBCAT_LIST_PATH, PathsHolder.CATALOG, resultWriter,
 				paramsMap);
 
 	}

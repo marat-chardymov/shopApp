@@ -9,13 +9,13 @@ import java.util.concurrent.locks.Lock;
 import com.epam.util.SingleRWLock;
 
 public class RLockTransformerResultPrinter {
-	public static void write(String keyPath, InputStream data,
+	public static void write(String stylesheetPath, String filePath,
 			Writer resultWriter, Map<String, Object>... paramsMap) {
 
 		Lock readLock = SingleRWLock.INSTANCE.readLock();
 		readLock.lock();
 		try {
-			TransformerResultPrinter.write(keyPath, data, resultWriter,
+			TransformerResultPrinter.write(stylesheetPath, filePath, resultWriter,
 					paramsMap);
 		} catch (IOException e) {
 			e.printStackTrace();

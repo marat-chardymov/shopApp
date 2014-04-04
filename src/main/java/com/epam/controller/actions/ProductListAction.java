@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.controller.Action;
+import com.epam.util.PathsHolder;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class ProductListAction implements Action {
@@ -22,16 +23,13 @@ public class ProductListAction implements Action {
 			throws IOException, ServletException {
 		PrintWriter resultWriter = response.getWriter();
 
-		InputStream catalog = CategoriesListAction.class
-				.getResourceAsStream("/catalog.xml");
-
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		RLockTransformerResultPrinter.write(PRODUCT_LIST_PATH, catalog,
+		RLockTransformerResultPrinter.write(PRODUCT_LIST_PATH, PathsHolder.CATALOG,
 				resultWriter, paramsMap);
 
 	}

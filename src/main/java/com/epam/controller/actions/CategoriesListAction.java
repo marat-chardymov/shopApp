@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.epam.controller.Action;
+import com.epam.util.PathsHolder;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class CategoriesListAction implements Action {
@@ -19,10 +20,8 @@ public class CategoriesListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		PrintWriter resultWriter = response.getWriter();
-		InputStream catalog = CategoriesListAction.class
-				.getResourceAsStream("/catalog.xml");
-		RLockTransformerResultPrinter.write(CATEGORIES_LIST_PATH, catalog, resultWriter);
+		PrintWriter resultWriter = response.getWriter();		
+		RLockTransformerResultPrinter.write(CATEGORIES_LIST_PATH, PathsHolder.CATALOG, resultWriter);
 
 	}
 }

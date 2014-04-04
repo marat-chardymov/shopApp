@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.epam.controller.Action;
 import com.epam.util.MapUtil;
+import com.epam.util.PathsHolder;
 import com.epam.util.transformation.RLockTransformerResultPrinter;
 
 public class NewProductAction implements Action {
@@ -24,9 +25,6 @@ public class NewProductAction implements Action {
 
 		PrintWriter resultWriter = response.getWriter();
 		
-		InputStream catalog = CategoriesListAction.class
-				.getResourceAsStream("/catalog.xml");
-
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
@@ -42,11 +40,11 @@ public class NewProductAction implements Action {
 		// validation errors
 		if (productMap != null) {
 			Map<String, Object> productProps = MapUtil.convert(productMap);
-			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, catalog,
+			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, PathsHolder.CATALOG,
 					resultWriter, productProps, errors);
 
 		} else {
-			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, catalog,
+			RLockTransformerResultPrinter.write(ADDING_PAGE_PATH, PathsHolder.CATALOG,
 					resultWriter, paramsMap);
 		}
 
