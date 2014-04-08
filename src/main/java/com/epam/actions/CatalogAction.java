@@ -1,17 +1,20 @@
 package com.epam.actions;
 
-import com.epam.forms.ProductsForm;
-import com.epam.util.PathsHolder;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.xpath.XPathFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
+import com.epam.forms.ProductsForm;
+import com.epam.util.PathsHolder;
 
 public final class CatalogAction extends DispatchAction {
 
@@ -24,7 +27,8 @@ public final class CatalogAction extends DispatchAction {
 		SAXBuilder saxBuilder = new SAXBuilder();
 		InputStream catalogIS = CatalogAction.class
 				.getResourceAsStream(PathsHolder.CATALOG);
-		Document document = saxBuilder.build(catalogIS);		
+		Document document = saxBuilder.build(catalogIS);
+		
 		ProductsForm productsForm = (ProductsForm) form;
 		productsForm.setDocument(document);
 		return mapping.findForward(CATEGORIES);
