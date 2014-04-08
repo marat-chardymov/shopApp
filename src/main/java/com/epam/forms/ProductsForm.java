@@ -5,24 +5,24 @@ import org.jdom2.Document;
 
 public class ProductsForm extends ActionForm {
 	
-	private String catName;
-	private String subcatName;
-    private Document document;
+	private int catIndex;
+	private int subcatIndex;
+    private Document document;    
     
-    public String getCatName() {
-		return catName;
+    public int getCatIndex() {
+		return catIndex;
 	}
 
-	public void setCatName(String catName) {
-		this.catName = catName;
+	public void setCatIndex(int catIndex) {
+		this.catIndex = catIndex;
 	}
 
-	public String getSubcatName() {
-		return subcatName;
+	public int getSubcatIndex() {
+		return subcatIndex;
 	}
 
-	public void setSubcatName(String subcatName) {
-		this.subcatName = subcatName;
+	public void setSubcatIndex(int subcatIndex) {
+		this.subcatIndex = subcatIndex;
 	}
 
 	public Document getDocument() {

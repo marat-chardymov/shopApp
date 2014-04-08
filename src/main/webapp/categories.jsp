@@ -15,9 +15,9 @@
 <div id="listBlock">
     <ul>
         <nested:root name="productsForm">
-            <nested:iterate property="document.rootElement.children" id="category">
+            <nested:iterate property="document.rootElement.children" id="category" indexId="index"> 
                 <nested:define id="categoryName" property="attributeValue(name)"/>
-                <li><a href="catalog.do?action=subcategories&catName=${categoryName}">${categoryName}</a>
+                <li><a href="catalog.do?action=subcategories&catIndex=${index}">${categoryName}</a>
                 (${category.children.size()})</li>
             </nested:iterate>
         </nested:root>
