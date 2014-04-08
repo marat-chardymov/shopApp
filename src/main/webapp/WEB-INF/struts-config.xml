@@ -11,6 +11,7 @@
 		<action path="/catalog" name="productsForm" type="com.epam.actions.CatalogAction"
 			parameter="action">
 			<forward name="categories" path="/categories.jsp" />
+			<forward name="subcategories" path="/subcategories.jsp" />
 			<forward name="products" path="/products.jsp" />
 		</action>
 	</action-mappings>
