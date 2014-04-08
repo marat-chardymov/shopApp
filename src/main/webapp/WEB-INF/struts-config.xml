@@ -5,11 +5,12 @@
 
 <struts-config>
 	<form-beans>
-		<form-bean name="ProductsForm" type="com.epam.forms.ProductsForm" />
+		<form-bean name="productsForm" type="com.epam.forms.ProductsForm" />
 	</form-beans>
 	<action-mappings>
-		<action path="/catalog" name="ProductsForm" type="com.epam.actions.CatalogAction"
+		<action path="/catalog" name="productsForm" type="com.epam.actions.CatalogAction"
 			parameter="action">
+			<forward name="categories" path="/categories.jsp" />
 			<forward name="products" path="/products.jsp" />
 		</action>
 	</action-mappings>
