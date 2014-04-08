@@ -14,9 +14,12 @@
 <body>
 	<div id="listBlock">
 		<ul>
-			<c:forEach items="${productsForm.document.rootElement.children}" var="category">
-				<li>${category.getAttributeValue("name")} (${category.children.size()})</li>
-				
+			<c:forEach items="${productsForm.document.rootElement.children}"
+				var="category">
+				<li><a
+					href="catalog.do?action=subcategories&catName=${category.getAttributeValue('name')}">
+						${category.getAttributeValue("name")}</a>
+					(${category.children.size()})</li>
 			</c:forEach>
 		</ul>
 	</div>
