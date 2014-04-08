@@ -20,6 +20,7 @@ public final class CatalogAction extends DispatchAction {
 
 	private static final String CATEGORIES = "categories";
 	private static final String SUBCATEGORIES = "subcategories";
+	private static final String PRODUCTS = "products";
 
 	public ActionForward categories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -28,11 +29,12 @@ public final class CatalogAction extends DispatchAction {
 		InputStream catalogIS = CatalogAction.class
 				.getResourceAsStream(PathsHolder.CATALOG);
 		Document document = saxBuilder.build(catalogIS);
-		
+
 		ProductsForm productsForm = (ProductsForm) form;
 		productsForm.setDocument(document);
 		return mapping.findForward(CATEGORIES);
 	}
+
 	public ActionForward subcategories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -44,5 +46,18 @@ public final class CatalogAction extends DispatchAction {
 		ProductsForm productsForm = (ProductsForm) form;
 		productsForm.setDocument(document);
 		return mapping.findForward(SUBCATEGORIES);
+	}
+
+	public ActionForward productList(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		SAXBuilder saxBuilder = new SAXBuilder();
+		InputStream catalogIS = CatalogAction.class
+				.getResourceAsStream(PathsHolder.CATALOG);
+		Document document = saxBuilder.build(catalogIS);
+
+		ProductsForm productsForm = (ProductsForm) form;
+		productsForm.setDocument(document);
+		return mapping.findForward(PRODUCTS);
 	}
 }

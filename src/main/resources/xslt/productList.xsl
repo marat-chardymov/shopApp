@@ -11,7 +11,7 @@
 
 		<html>
 			<head>
-				<title>add new product</title>
+				<title>product list</title>
 				<link rel="stylesheet" href="css/bootstrap.min.css" />
 				<link rel="stylesheet" href="css/productList.css" />
 			</head>
