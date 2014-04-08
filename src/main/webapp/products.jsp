@@ -15,30 +15,25 @@
 					<th>color</th>
 					<th>date of issue</th>
 					<th>model</th>
-					<th>producer</th>
 					<th>price</th>
+					<th>producer</th>
 				</tr>
-				<logic:iterate id="tmpProduct" name="productsForm"
-					property="document.rootElement.children[${productsForm.catIndex}].children[${productsForm.catIndex}].children[0].children"
-					indexId="productId">
-					<tr>
-						<td><html:text name="tmpProduct" property="child(color).text" />
-						</td>
-						<td>
-						<html:text name="tmpProduct" property="child(dateOfIssue).text"/>
-						</td>
-						<td>
-						<html:text name="tmpProduct" property="child(model).text"/>
-						</td>
-						<td>
-						<html:text name="tmpProduct" property="child(producer).text"/></td>
-						<td>
-						<html:text name="tmpProduct" property="child(price).text"/>
-						</td>
-					</tr>
-				</logic:iterate>
+				<nested:form
+					action="/catalog.do?method=save&catIndex=${productsForm.catIndex}&subcatIndex=${subcategoryName}">
+					<nested:iterate id="tmpProduct"
+						property="document.rootElement.children[${productsForm.catIndex}].children[${productsForm.subcatIndex}].children[0].children">
+						<tr>
+							<td><nested:text property="children[0].text" /></td>
+							<td><nested:text property="children[1].text" /></td>
+							<td><nested:text property="children[2].text" /></td>
+							<td><nested:text property="children[3].text" /></td>
+							<td><nested:text property="children[4].text" /></td>
+						</tr>
+					</nested:iterate>
+				</nested:form>
+
 			</table>
-			<a href="catalog.do?action=subcategories&catIndex=${catIndex}"
+			<a href="catalog.do?action=subcategories&catIndex=${productsForm.catIndex}"
 				class="btn btn-default">Back</a> <a
 				href="catalog.do?action==newProduct&catIndex={catIndex}&subcatIndex={$subcatIndex}"
 				class="btn btn-default" id="add"> Add </a>
