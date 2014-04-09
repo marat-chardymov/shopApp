@@ -5,6 +5,7 @@ import javax.servlet.ServletContextListener;
 
 public class PathsHolder implements ServletContextListener {
 	public static final String CATALOG = "/catalog.xml";
+	public static final String ADDING_PAGE_PATH = "/xslt/addingPage.xsl";
 	public static String PATH_TO_CATALOG = null;
 
 	@Override

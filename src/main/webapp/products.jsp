@@ -21,7 +21,7 @@
 						<th>producer</th>
 					</tr>
 					<nested:form
-						action="/catalog.do?method=save&catIndex=${productsForm.catIndex}&subcatIndex=${subcategoryName}">
+						action="/catalog.do?method=save&catIndex=${productsForm.catIndex}&subcatIndex=${productsForm.subcatIndex}">
 						<nested:iterate id="tmpProduct"
 							property="document.rootElement.children[${productsForm.catIndex}].children[${productsForm.subcatIndex}].children[0].children">
 							<tr>
@@ -39,6 +39,10 @@
 					href="catalog.do?action=subcategories&catIndex=${productsForm.catIndex}"
 					class="btn btn-default">Back</a>
 					<input type="submit" value="Save" id="saveBtn" class="btn btn-default"/>
+					
+					<a
+					href="catalog.do?action=add&catIndex=${productsForm.catIndex}&subcatIndex=${productsForm.subcatIndex}"
+					class="btn btn-default">Add</a>
 			</div>
 		</nested:form>
 	</nested:root>

@@ -28,7 +28,7 @@
 			<body>
 				<div id='form'>
 					<form
-						action="FrontController.do?action=saveProduct&amp;catName={$catName}&amp;subcatName={$subcatName}"
+						action="catalog.do?action=saveProduct&amp;catName={$catName}&amp;subcatName={$subcatName}"
 						method="POST">
 						<h4>Please,fill in the form below. Fields shouldn't be empty</h4>
 
@@ -101,7 +101,7 @@
 							</tr>
 						</table>
 						<a
-							href="FrontController.do?action=productList&amp;catName={$catName}&amp;subcatName={$subcatName}"
+							href="catalog.do?action=productList&amp;catName={$catName}&amp;subcatName={$subcatName}"
 							class="btn btn-default" id="cancel">Back</a>
 						<input type="submit" value="Save" class="btn btn-default" id="save"/>
 
