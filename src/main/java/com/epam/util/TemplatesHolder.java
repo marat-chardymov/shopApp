@@ -11,9 +11,6 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
-import com.epam.controller.actions.CategoriesListAction;
-import com.epam.controller.actions.SubcategoriesListAction;
-
 public class TemplatesHolder {
 
 	private static Map<String, Templates> templatesMap = new HashMap<String, Templates>();

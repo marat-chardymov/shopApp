@@ -1,6 +1,5 @@
 package com.epam.util;
 
-import java.util.Map;
 
 public class Validator {
 

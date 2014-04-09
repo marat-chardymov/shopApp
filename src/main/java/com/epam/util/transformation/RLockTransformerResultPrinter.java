@@ -1,7 +1,6 @@
 package com.epam.util.transformation;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;

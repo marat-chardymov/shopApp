@@ -12,7 +12,7 @@
 			parameter="action">
 			<forward name="categories" path="/categories.jsp" />
 			<forward name="subcategories" path="/subcategories.jsp" />
-			<forward name="products" path="/products.jsp" />
+			<forward name="products" path="/products.jsp" redirect="true"/>
 		</action>
 	</action-mappings>
 </struts-config>

@@ -8,36 +8,39 @@
 </head>
 <body>
 	<nested:root name="productsForm">
-		<div id="block">
-			<table cellpadding="6" class="table" style="width: 600px;">
+		<nested:form
+			action="/catalog.do?action=save&catIndex=${productsForm.catIndex}&subcatIndex=${productsForm.subcatIndex}">
+			<div id="block">
+				<table cellpadding="6" class="table" style="width: 600px;">
 
-				<tr>
-					<th>color</th>
-					<th>date of issue</th>
-					<th>model</th>
-					<th>price</th>
-					<th>producer</th>
-				</tr>
-				<nested:form
-					action="/catalog.do?method=save&catIndex=${productsForm.catIndex}&subcatIndex=${subcategoryName}">
-					<nested:iterate id="tmpProduct"
-						property="document.rootElement.children[${productsForm.catIndex}].children[${productsForm.subcatIndex}].children[0].children">
-						<tr>
-							<td><nested:text property="children[0].text" /></td>
-							<td><nested:text property="children[1].text" /></td>
-							<td><nested:text property="children[2].text" /></td>
-							<td><nested:text property="children[3].text" /></td>
-							<td><nested:text property="children[4].text" /></td>
-						</tr>
-					</nested:iterate>
-				</nested:form>
+					<tr>
+						<th>color</th>
+						<th>date of issue</th>
+						<th>model</th>
+						<th>price</th>
+						<th>producer</th>
+					</tr>
+					<nested:form
+						action="/catalog.do?method=save&catIndex=${productsForm.catIndex}&subcatIndex=${subcategoryName}">
+						<nested:iterate id="tmpProduct"
+							property="document.rootElement.children[${productsForm.catIndex}].children[${productsForm.subcatIndex}].children[0].children">
+							<tr>
+								<td><nested:text property="children[0].text" /></td>
+								<td><nested:text property="children[1].text" /></td>
+								<td><nested:text property="children[2].text" /></td>
+								<td><nested:text property="children[3].text" /></td>
+								<td><nested:text property="children[4].text" /></td>
+							</tr>
+						</nested:iterate>
+					</nested:form>
 
-			</table>
-			<a href="catalog.do?action=subcategories&catIndex=${productsForm.catIndex}"
-				class="btn btn-default">Back</a> <a
-				href="catalog.do?action==newProduct&catIndex={catIndex}&subcatIndex={$subcatIndex}"
-				class="btn btn-default" id="add"> Add </a>
-		</div>
+				</table>
+				<a
+					href="catalog.do?action=subcategories&catIndex=${productsForm.catIndex}"
+					class="btn btn-default">Back</a>
+					<input type="submit" value="Save" id="saveBtn" class="btn btn-default"/>
+			</div>
+		</nested:form>
 	</nested:root>
 </body>
 </html>

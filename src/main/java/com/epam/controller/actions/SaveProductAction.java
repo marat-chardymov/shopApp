@@ -93,8 +93,6 @@ public class SaveProductAction implements Action {
 					// read from catalog file write to buffer but skip
 					// validation
 					validSkip = true;
-					InputStream catalogIS = SaveProductAction.class
-							.getResourceAsStream("/catalog.xml");
 					RLockTransformerResultPrinter.write(SAVE_PRODUCT_PATH,
 							PathsHolder.CATALOG, resultWriter, transParams);
 					// try to write into the catalog file

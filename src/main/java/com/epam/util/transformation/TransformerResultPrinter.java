@@ -1,17 +1,18 @@
 package com.epam.util.transformation;
 
-import javax.xml.transform.*;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import com.epam.controller.actions.CategoriesListAction;
-import com.epam.util.TemplatesHolder;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import com.epam.util.TemplatesHolder;
 
 public class TransformerResultPrinter {
 

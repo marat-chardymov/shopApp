@@ -25,8 +25,8 @@
 					<color>Air Force blue</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
 					<model>as003</model>
-					<producer>producer3</producer>
 					<notInStock/>
+					<producer>producer3</producer>					
 				</product>
 				<product>
 					<color>Carolina blue</color>
