@@ -37,7 +37,7 @@
 				</table>
 				<a
 					href="catalog.do?action=subcategories&catIndex=${productsForm.catIndex}"
-					class="btn btn-default">Back</a>
+					class="btn btn-default" id="backBtn">Back</a>
 					<input type="submit" value="Save" id="saveBtn" class="btn btn-default"/>
 					
 					<a

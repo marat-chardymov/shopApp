@@ -10,12 +10,12 @@ public class Validator {
 			Object modelError, Object colorError, Object dateOfIssueError,
 			Object priceError, Object producerError) {
 		
-		validateProducer(producer, (StringBuffer)producerError);
-		validateModel(model, (StringBuffer)modelError);
-		validateColor(color, (StringBuffer)colorError);
-		validateDateOfIssue(dateOfIssue, (StringBuffer)dateOfIssueError);
+		validateProducer(producer, (StringBuilder)producerError);
+		validateModel(model, (StringBuilder)modelError);
+		validateColor(color, (StringBuilder)colorError);
+		validateDateOfIssue(dateOfIssue, (StringBuilder)dateOfIssueError);
 		if (notInStock == false) {
-			validatePrice(price, (StringBuffer)priceError);
+			validatePrice(price, (StringBuilder)priceError);
 		}
 		if (producerError.toString().isEmpty() && modelError.toString().isEmpty()
 				&& colorError.toString().isEmpty() && dateOfIssueError.toString().isEmpty()
@@ -26,14 +26,14 @@ public class Validator {
 		}
 	}
 
-	private static void validateProducer(String producer, StringBuffer producerError) {
+	private static void validateProducer(String producer, StringBuilder producerError) {
 		// empty
 		if (producer.isEmpty()) {
 			producerError.append("producer field shouldn't be empty");
 		}
 	}
 
-	private static void validateModel(String model, StringBuffer modelError) {
+	private static void validateModel(String model, StringBuilder modelError) {
 		// empty
 		if (model.isEmpty()) {
 			modelError.append("model field shouldn't be empty ");
@@ -45,7 +45,7 @@ public class Validator {
 		}
 	}
 
-	private static void validateColor(String color, StringBuffer colorError) {
+	private static void validateColor(String color, StringBuilder colorError) {
 		// empty
 		if (color.isEmpty()) {
 			colorError.append("color field shouldn't be empty ");
@@ -53,7 +53,7 @@ public class Validator {
 	}
 
 	private static void validateDateOfIssue(String dateOfIssue,
-			StringBuffer dateOfIssueError) {
+			StringBuilder dateOfIssueError) {
 		// empty
 		if (dateOfIssue.isEmpty()) {
 			dateOfIssueError.append("dateOfIssue field shouldn't be empty ");
@@ -66,7 +66,7 @@ public class Validator {
 		}
 	}
 
-	private static void validatePrice(String price, StringBuffer priceError) {
+	private static void validatePrice(String price, StringBuilder priceError) {
 		// empty
 		if (price.isEmpty()) {
 			priceError.append("price field shouldn't be empty or notInStock must be checked");
