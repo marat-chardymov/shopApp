@@ -6,16 +6,16 @@
 				<product>
 					<color>Dark salmon</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
-					<model>as001</model>
-					<price>100</price>
+					<model>as001</model>					
 					<producer>producer1</producer>
+					<price>100</price>
 				</product>
 				<product>
 					<color>Denim</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as002</model>
-					<notInStock/>
+					<model>as002</model>					
 					<producer>producer2</producer>
+					<notInStock/>
 				</product>
 			</products>
 		</subCategories>
@@ -24,23 +24,23 @@
 				<product>
 					<color>Air Force blue</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
-					<model>as003</model>
-					<notInStock/>
-					<producer>producer3</producer>					
+					<model>as003</model>					
+					<producer>producer3</producer>	
+					<notInStock/>				
 				</product>
 				<product>
 					<color>Carolina blue</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as004</model>
-					<price>400</price>
+					<model>as004</model>					
 					<producer>producer4</producer>
+					<price>400</price>
 				</product>
 				<product>
 					<color>Sunrise</color>
 					<dateOfIssue>01-01-2009</dateOfIssue>
 					<model>as001</model>
-					<price>9000</price>
 					<producer>producer4</producer>
+					<price>9000</price>
 				</product>
 			</products>
 		</subCategories>
@@ -51,16 +51,16 @@
 				<product>
 					<color>ultraviolet</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
-					<model>as003</model>
-					<notInStock/>
+					<model>as003</model>					
 					<producer>producer3</producer>
+					<notInStock/>
 				</product>
 				<product>
 					<color>navy blue</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as004</model>
-					<price>400</price>
+					<model>as004</model>					
 					<producer>producer4</producer>
+					<price>400</price>
 				</product>
 			</products>
 		</subCategories>
@@ -69,9 +69,9 @@
 				<product>
 					<color>Burnt orange</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as004</model>
-					<price>400</price>
+					<model>as004</model>					
 					<producer>producer4</producer>
+					<price>400</price>
 				</product>
 			</products>
 		</subCategories>

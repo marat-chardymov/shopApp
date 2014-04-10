@@ -26,6 +26,7 @@ public final class CatalogAction extends DispatchAction {
 	private static final String CATEGORIES = "categories";
 	private static final String SUBCATEGORIES = "subcategories";
 	private static final String PRODUCTS = "products";
+	private static final String PRODUCTS_LIST_ACTION = "productsListAction";
 
 	public ActionForward categories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -185,7 +186,7 @@ public final class CatalogAction extends DispatchAction {
 			}
 //			String redirect = "catalog.do?action=productList";
 //			response.sendRedirect(redirect);
-			return mapping.findForward(PRODUCTS);
+			return mapping.findForward(PRODUCTS_LIST_ACTION);
 		} else {
 			// forward back to adding page with validation errors
 			Writer writer = response.getWriter();

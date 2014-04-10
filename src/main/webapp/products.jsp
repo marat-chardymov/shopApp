@@ -16,9 +16,9 @@
 					<tr>
 						<th>color</th>
 						<th>date of issue</th>
-						<th>model</th>
-						<th>price</th>
+						<th>model</th>						
 						<th>producer</th>
+						<th>price</th>
 					</tr>
 					<nested:form
 						action="/catalog.do?method=save&catIndex=${productsForm.catIndex}&subcatIndex=${productsForm.subcatIndex}">
