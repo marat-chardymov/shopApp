@@ -15,7 +15,7 @@
 					<dateOfIssue>02-02-2012</dateOfIssue>
 					<model>as002</model>					
 					<producer>producer2</producer>
-					<notInStock/>
+					<notInStock></notInStock>
 				</product>
 			</products>
 		</subCategories>
@@ -53,7 +53,7 @@
 					<dateOfIssue>12-12-2012</dateOfIssue>
 					<model>as003</model>					
 					<producer>producer3</producer>
-					<notInStock/>
+					<notInStock>not in stock</notInStock>
 				</product>
 				<product>
 					<color>navy blue</color>

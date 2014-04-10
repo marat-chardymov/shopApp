@@ -16,7 +16,7 @@
 					<tr>
 						<th>color</th>
 						<th>date of issue</th>
-						<th>model</th>						
+						<th>model</th>
 						<th>producer</th>
 						<th>price</th>
 					</tr>
@@ -37,10 +37,8 @@
 				</table>
 				<a
 					href="catalog.do?action=subcategories&catIndex=${productsForm.catIndex}"
-					class="btn btn-default" id="backBtn">Back</a>
-					<input type="submit" value="Save" id="saveBtn" class="btn btn-default"/>
-					
-					<a
+					class="btn btn-default" id="backBtn">Back</a> <input type="submit"
+					value="Save" id="saveBtn" class="btn btn-default" /> <a
 					href="catalog.do?action=add&catIndex=${productsForm.catIndex}&subcatIndex=${productsForm.subcatIndex}"
 					class="btn btn-default">Add</a>
 			</div>

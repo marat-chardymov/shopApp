@@ -58,8 +58,6 @@ public final class CatalogAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		SAXBuilder saxBuilder = new SAXBuilder();
-//		InputStream catalogIS = CatalogAction.class
-//				.getResourceAsStream(PathsHolder.CATALOG);
 		File catalogFile=new File(PathsHolder.PATH_TO_CATALOG);
 		Document document = saxBuilder.build(catalogFile);
 
@@ -148,13 +146,10 @@ public final class CatalogAction extends DispatchAction {
 		transParams.put("validSkip", validSkip);
 			
 		// read from catalog file write to buffer
-//		Writer resultWriter = new StringWriter();
-		Writer resultWriter2 = new StringWriter();
-//		RLockTransformerResultPrinter.write(PathsHolder.SAVE_PRODUCT_PATH,
-//				PathsHolder.PATH_TO_CATALOG, resultWriter, transParams);
+		Writer resultWriter = new StringWriter();
 		
 		RLockTransformerResultPrinter.write(PathsHolder.SAVE_PRODUCT_PATH,
-				PathsHolder.CATALOG, resultWriter2, transParams);
+				PathsHolder.CATALOG, resultWriter, transParams);
 
 		if (noErrors(modelError, colorError, dateOfIssueError, priceError,
 				producerError)) {
@@ -165,7 +160,7 @@ public final class CatalogAction extends DispatchAction {
 				if (lastModCheck == lastMod) {
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
-					fileWriter.write(resultWriter2.toString());
+					fileWriter.write(resultWriter.toString());
 					fileWriter.flush();
 					fileWriter.close();
 				} else {
@@ -173,10 +168,10 @@ public final class CatalogAction extends DispatchAction {
 					// validation
 					validSkip = true;
 					RLockTransformerResultPrinter.write(PathsHolder.SAVE_PRODUCT_PATH,
-							PathsHolder.PATH_TO_CATALOG, resultWriter2, transParams);
+							PathsHolder.PATH_TO_CATALOG, resultWriter, transParams);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
-					fileWriter.write(resultWriter2.toString());
+					fileWriter.write(resultWriter.toString());
 					fileWriter.flush();
 					fileWriter.close();
 				}
@@ -184,13 +179,11 @@ public final class CatalogAction extends DispatchAction {
 			} finally {
 				writeLock.unlock();
 			}
-//			String redirect = "catalog.do?action=productList";
-//			response.sendRedirect(redirect);
 			return mapping.findForward(PRODUCTS_LIST_ACTION);
 		} else {
 			// forward back to adding page with validation errors
 			Writer writer = response.getWriter();
-			writer.write(resultWriter2.toString());
+			writer.write(resultWriter.toString());
 		}
 		return null;
 	}

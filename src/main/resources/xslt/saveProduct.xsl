@@ -80,7 +80,7 @@
 						</xsl:element>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:element name="notInStock" />
+						<xsl:element name="notInStock">not in stock</xsl:element>
 					</xsl:otherwise>
 				</xsl:choose>
 				
