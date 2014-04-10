@@ -15,7 +15,7 @@
 				<table cellpadding="6" class="table" style="width: 900px;">
 					<tr>
 						<th>producer</th>
-						<th>model</th>
+						<th>model(2 letters 3 digits)</th>
 						<th>color</th>
 						<th>date of issue (dd-MM-yyyy)</th>
 						<th>price</th>
@@ -30,7 +30,7 @@
 							<td><nested:text property="children[2].text"
 									styleClass="color" /></td>
 							<td><nested:text property="children[3].text"
-									styleClass="dateOfIssue" /></td>						
+									styleClass="dateOfIssue" /></td>
 							<td><nested:text property="children[4].text"
 									styleClass="price" /></td>
 						</tr>
@@ -49,8 +49,6 @@
 
 	<script
 		src='${pageContext.request.contextPath}/js/lib/jquery-1.11.0.min.js'></script>
-	<script
-		src='${pageContext.request.contextPath}/js/lib/bootstrap.min.js'></script>
 	<script
 		src='${pageContext.request.contextPath}/js/lib/jquery.validate.min.js'></script>
 	<script src='${pageContext.request.contextPath}/js/products.js'></script>
