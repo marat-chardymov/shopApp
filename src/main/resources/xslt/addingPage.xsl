@@ -32,7 +32,7 @@
 						method="POST">
 						<h4>Please,fill in the form below. Fields shouldn't be empty</h4>
 
-						<table style="border: none; width: 800px;" class="table">
+						<table class="table">
 							<tr>
 								<td>
 									<label for="model">model (2 letters and 3 digits)</label>
