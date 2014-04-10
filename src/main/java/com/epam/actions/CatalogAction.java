@@ -58,7 +58,7 @@ public final class CatalogAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		SAXBuilder saxBuilder = new SAXBuilder();
-		File catalogFile=new File(PathsHolder.PATH_TO_CATALOG);
+		File catalogFile = new File(PathsHolder.PATH_TO_CATALOG);
 		Document document = saxBuilder.build(catalogFile);
 
 		ProductsForm productsForm = (ProductsForm) form;
@@ -82,12 +82,12 @@ public final class CatalogAction extends DispatchAction {
 		ProductsForm productsForm = (ProductsForm) form;
 		int catIndex = productsForm.getCatIndex();
 		int subcatIndex = productsForm.getSubcatIndex();
-		
-		//get category and subcategory names by indexes
+
+		// get category and subcategory names by indexes
 		Document document = productsForm.getDocument();
-		String catName = indexToCatName(document,catIndex);
+		String catName = indexToCatName(document, catIndex);
 		String subcatName = indexToSubcatname(document, catIndex, subcatIndex);
-		
+
 		PrintWriter resultWriter = response.getWriter();
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		paramsMap.put("catName", catName);
@@ -97,34 +97,13 @@ public final class CatalogAction extends DispatchAction {
 				PathsHolder.CATALOG, resultWriter, paramsMap);
 		return null;
 	}
-	
+
 	public ActionForward saveProduct(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		String catName = request.getParameter("catName");
-		String subcatName = request.getParameter("subcatName");
-
-		String model = request.getParameter("model");
-		String color = request.getParameter("color");
-		String dateOfIssue = request.getParameter("dateOfIssue");
-		String producer = request.getParameter("producer");
-		String notInStockStr = request.getParameter("notInStock");
-		String price = request.getParameter("price");
-		boolean notInStock = false;
-		if ("on".equals(notInStockStr)) {
-			notInStock = true;
-			price = "";
-		}		
 
 		Map<String, Object> transParams = new HashMap<String, Object>();
-		transParams.put("catName", catName);
-		transParams.put("subcatName", subcatName);
-		transParams.put("model", model);
-		transParams.put("color", color);
-		transParams.put("dateOfIssue", dateOfIssue);
-		transParams.put("price", price);
-		transParams.put("producer", producer);
-		transParams.put("notInStock", notInStock);
+		fillParams(request, transParams); //fill params from request
 
 		StringBuilder modelError = new StringBuilder();
 		StringBuilder colorError = new StringBuilder();
@@ -132,11 +111,11 @@ public final class CatalogAction extends DispatchAction {
 		StringBuilder priceError = new StringBuilder();
 		StringBuilder producerError = new StringBuilder();
 
-		transParams.put("modelError", (Object)modelError);
-		transParams.put("colorError", (Object)colorError);
-		transParams.put("dateOfIssueError", (Object)dateOfIssueError);
-		transParams.put("priceError", (Object)priceError);
-		transParams.put("producerError", (Object)producerError);
+		transParams.put("modelError", (Object) modelError);
+		transParams.put("colorError", (Object) colorError);
+		transParams.put("dateOfIssueError", (Object) dateOfIssueError);
+		transParams.put("priceError", (Object) priceError);
+		transParams.put("producerError", (Object) producerError);
 
 		// get last modified before read from file and write to buffer
 		File catalogFile = new File(PathsHolder.PATH_TO_CATALOG);
@@ -144,10 +123,10 @@ public final class CatalogAction extends DispatchAction {
 
 		Boolean validSkip = false;
 		transParams.put("validSkip", validSkip);
-			
+
 		// read from catalog file write to buffer
 		Writer resultWriter = new StringWriter();
-		
+
 		RLockTransformerResultPrinter.write(PathsHolder.SAVE_PRODUCT_PATH,
 				PathsHolder.CATALOG, resultWriter, transParams);
 
@@ -167,8 +146,10 @@ public final class CatalogAction extends DispatchAction {
 					// read from catalog file write to buffer but skip
 					// validation
 					validSkip = true;
-					RLockTransformerResultPrinter.write(PathsHolder.SAVE_PRODUCT_PATH,
-							PathsHolder.PATH_TO_CATALOG, resultWriter, transParams);
+					RLockTransformerResultPrinter.write(
+							PathsHolder.SAVE_PRODUCT_PATH,
+							PathsHolder.CATALOG, resultWriter,
+							transParams);
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
 					fileWriter.write(resultWriter.toString());
@@ -187,7 +168,7 @@ public final class CatalogAction extends DispatchAction {
 		}
 		return null;
 	}
-	
+
 	private boolean noErrors(StringBuilder... errorsStr) {
 		for (StringBuilder err : errorsStr) {
 			if (!err.toString().isEmpty()) {
@@ -196,16 +177,46 @@ public final class CatalogAction extends DispatchAction {
 		}
 		return true;
 	}
-    private String indexToCatName(Document document,int catIndex){
-        Element rootElement = document.getRootElement();
-        Attribute catNameAttr = rootElement.getChildren().get(catIndex)
-                .getAttribute("name");
-        return catNameAttr.getValue();
-    }
-    private String indexToSubcatname(Document document,int catIndex,int subcatIndex){
-        Element rootElement = document.getRootElement();
-        Attribute subcatNameAtr = rootElement.getChildren().get(catIndex)
-                .getChildren().get(subcatIndex).getAttribute("name");
-        return subcatNameAtr.getValue();
-    }
+
+	private String indexToCatName(Document document, int catIndex) {
+		Element rootElement = document.getRootElement();
+		Attribute catNameAttr = rootElement.getChildren().get(catIndex)
+				.getAttribute("name");
+		return catNameAttr.getValue();
+	}
+
+	private String indexToSubcatname(Document document, int catIndex,
+			int subcatIndex) {
+		Element rootElement = document.getRootElement();
+		Attribute subcatNameAtr = rootElement.getChildren().get(catIndex)
+				.getChildren().get(subcatIndex).getAttribute("name");
+		return subcatNameAtr.getValue();
+	}
+
+	private void fillParams(HttpServletRequest request,
+			Map<String, Object> params) {
+		String catName = request.getParameter("catName");
+		String subcatName = request.getParameter("subcatName");
+
+		String model = request.getParameter("model");
+		String color = request.getParameter("color");
+		String dateOfIssue = request.getParameter("dateOfIssue");
+		String producer = request.getParameter("producer");
+		String notInStockStr = request.getParameter("notInStock");
+		String price = request.getParameter("price");
+		boolean notInStock = false;
+		if ("on".equals(notInStockStr)) {
+			notInStock = true;
+			price = "";
+		}
+		params.put("catName", catName);
+		params.put("subcatName", subcatName);
+		params.put("model", model);
+		params.put("color", color);
+		params.put("dateOfIssue", dateOfIssue);
+		params.put("price", price);
+		params.put("producer", producer);
+		params.put("notInStock", notInStock);
+
+	}
 }
