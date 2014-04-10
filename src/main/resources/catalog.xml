@@ -4,42 +4,42 @@
 		<subCategories name="s1">
 			<products>
 				<product>
+					<producer>producer1</producer>
+					<model>as001</model>
 					<color>Dark salmon</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
-					<model>as001</model>					
-					<producer>producer1</producer>
 					<price>100</price>
 				</product>
 				<product>
+					<producer>producer2</producer>
+					<model>as002</model>
 					<color>Denim</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as002</model>					
-					<producer>producer2</producer>
-					<notInStock></notInStock>
+					<notInStock>not in stock</notInStock>
 				</product>
 			</products>
 		</subCategories>
 		<subCategories name="s2">
 			<products>
 				<product>
+					<producer>producer3</producer>
+					<model>as003</model>
 					<color>Air Force blue</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
-					<model>as003</model>					
-					<producer>producer3</producer>	
-					<notInStock/>				
+					<notInStock>not in stock</notInStock>
 				</product>
 				<product>
+					<producer>producer4</producer>
+					<model>as004</model>
 					<color>Carolina blue</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as004</model>					
-					<producer>producer4</producer>
 					<price>400</price>
 				</product>
 				<product>
+					<producer>producer4</producer>
+					<model>as001</model>
 					<color>Sunrise</color>
 					<dateOfIssue>01-01-2009</dateOfIssue>
-					<model>as001</model>
-					<producer>producer4</producer>
 					<price>9000</price>
 				</product>
 			</products>
@@ -49,17 +49,17 @@
 		<subCategories name="s3">
 			<products>
 				<product>
+					<producer>producer3</producer>
+					<model>as003</model>
 					<color>ultraviolet</color>
 					<dateOfIssue>12-12-2012</dateOfIssue>
-					<model>as003</model>					
-					<producer>producer3</producer>
 					<notInStock>not in stock</notInStock>
 				</product>
 				<product>
+					<producer>producer4</producer>
+					<model>as004</model>
 					<color>navy blue</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as004</model>					
-					<producer>producer4</producer>
 					<price>400</price>
 				</product>
 			</products>
@@ -67,10 +67,10 @@
 		<subCategories name="s4">
 			<products>
 				<product>
+					<producer>producer4</producer>
+					<model>as004</model>
 					<color>Burnt orange</color>
 					<dateOfIssue>02-02-2012</dateOfIssue>
-					<model>as004</model>					
-					<producer>producer4</producer>
 					<price>400</price>
 				</product>
 			</products>

@@ -40,7 +40,7 @@ public class Validator {
 			return;
 		}
 		// 2 letters 3 digits pattern
-		if (!model.matches("^[a-zA-Z][a-zA-Z][0-9][0-9][0-9]$")) {
+		if (!model.matches("^[a-zA-Z]{2}[0-9]{3}$")) {
 			modelError.append("model field should consist of two letters and three digits");
 		}
 	}
