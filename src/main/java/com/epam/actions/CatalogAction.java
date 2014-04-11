@@ -1,9 +1,23 @@
 package com.epam.actions;
 
-import com.epam.forms.ProductsForm;
-import com.epam.util.PathsHolder;
-import com.epam.util.SingleRWLock;
-import com.epam.util.transformation.RLockTransformerResultPrinter;
+import static com.epam.util.PathsHolder.ADDING_PAGE_PATH;
+import static com.epam.util.PathsHolder.CATALOG;
+import static com.epam.util.PathsHolder.PATH_TO_CATALOG;
+import static com.epam.util.PathsHolder.SAVE_PRODUCT_PATH;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -11,15 +25,13 @@ import org.apache.struts.actions.DispatchAction;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.locks.Lock;
+import com.epam.forms.ProductsForm;
+import com.epam.util.SingleRWLock;
+import com.epam.util.transformation.TransformerResultPrinter;
 
 public final class CatalogAction extends DispatchAction {
 
@@ -31,38 +43,21 @@ public final class CatalogAction extends DispatchAction {
 	public ActionForward categories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SAXBuilder saxBuilder = new SAXBuilder();
-		InputStream catalogIS = CatalogAction.class
-				.getResourceAsStream(PathsHolder.CATALOG);
-		Document document = saxBuilder.build(catalogIS);
-
-		ProductsForm productsForm = (ProductsForm) form;
-		productsForm.setDocument(document);
+		readDocAndPutIntoForm(form);
 		return mapping.findForward(CATEGORIES);
 	}
 
 	public ActionForward subcategories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SAXBuilder saxBuilder = new SAXBuilder();
-		InputStream catalogIS = CatalogAction.class
-				.getResourceAsStream(PathsHolder.CATALOG);
-		Document document = saxBuilder.build(catalogIS);
-
-		ProductsForm productsForm = (ProductsForm) form;
-		productsForm.setDocument(document);
+		readDocAndPutIntoForm(form);
 		return mapping.findForward(SUBCATEGORIES);
 	}
 
 	public ActionForward productList(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		SAXBuilder saxBuilder = new SAXBuilder();
-		File catalogFile = new File(PathsHolder.PATH_TO_CATALOG);
-		Document document = saxBuilder.build(catalogFile);
-
-		ProductsForm productsForm = (ProductsForm) form;
-		productsForm.setDocument(document);
+		readDocAndPutIntoForm(form);
 		return mapping.findForward(PRODUCTS);
 	}
 
@@ -70,9 +65,9 @@ public final class CatalogAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		Document document = ((ProductsForm) form).getDocument();
-		File catalogFile = new File(PathsHolder.PATH_TO_CATALOG);
-		XMLOutputter xmlOutput = new XMLOutputter();
-		xmlOutput.output(document, new FileWriter(catalogFile));
+		File catalogFile = new File(PATH_TO_CATALOG);
+		Writer fileWrite = new FileWriter(catalogFile);
+		new XMLOutputter().output(document, fileWrite);
 		return mapping.findForward(PRODUCTS);
 	}
 
@@ -83,8 +78,8 @@ public final class CatalogAction extends DispatchAction {
 		int catIndex = productsForm.getCatIndex();
 		int subcatIndex = productsForm.getSubcatIndex();
 
-		// get category and subcategory names by indexes
 		Document document = productsForm.getDocument();
+		// get category and subcategory names by indexes
 		String catName = indexToCatName(document, catIndex);
 		String subcatName = indexToSubcatname(document, catIndex, subcatIndex);
 
@@ -93,17 +88,22 @@ public final class CatalogAction extends DispatchAction {
 		paramsMap.put("catName", catName);
 		paramsMap.put("subcatName", subcatName);
 
-		RLockTransformerResultPrinter.write(PathsHolder.ADDING_PAGE_PATH,
-				PathsHolder.CATALOG, resultWriter, paramsMap);
+		Lock readLock = SingleRWLock.INSTANCE.readLock();
+		readLock.lock();
+		try {
+			TransformerResultPrinter.write(ADDING_PAGE_PATH, CATALOG,
+					resultWriter, paramsMap);
+		} finally {
+			readLock.unlock();
+		}
 		return null;
 	}
 
 	public ActionForward saveProduct(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-
 		Map<String, Object> transParams = new HashMap<String, Object>();
-		fillParams(request, transParams); //fill params from request
+		fillParams(transParams, request); // fill params from request
 
 		StringBuilder modelError = new StringBuilder();
 		StringBuilder colorError = new StringBuilder();
@@ -117,39 +117,36 @@ public final class CatalogAction extends DispatchAction {
 		transParams.put("priceError", (Object) priceError);
 		transParams.put("producerError", (Object) producerError);
 
-		// get last modified before read from file and write to buffer
-		File catalogFile = new File(PathsHolder.PATH_TO_CATALOG);
-		long lastMod = catalogFile.lastModified();
-
 		Boolean validSkip = false;
 		transParams.put("validSkip", validSkip);
 
+		File catalogFile = new File(PATH_TO_CATALOG);
 		// read from catalog file write to buffer
 		Writer resultWriter = new StringWriter();
-
-		RLockTransformerResultPrinter.write(PathsHolder.SAVE_PRODUCT_PATH,
-				PathsHolder.CATALOG, resultWriter, transParams);
-
+	
+		Lock readLock = SingleRWLock.INSTANCE.readLock();
+		readLock.lock();
+		long lastMod = 0;
+		try {
+			// get last modified before read from file and write to buffer
+			lastMod = catalogFile.lastModified();
+			TransformerResultPrinter.write(SAVE_PRODUCT_PATH, CATALOG,
+					resultWriter, transParams);
+		} finally {
+			readLock.unlock();
+		}
+		
 		if (noErrors(modelError, colorError, dateOfIssueError, priceError,
 				producerError)) {
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
 			writeLock.lock();
 			try {
 				long lastModCheck = catalogFile.lastModified();
-				if (lastModCheck == lastMod) {
-					// try to write into the catalog file
-					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
-					fileWriter.write(resultWriter.toString());
-					fileWriter.flush();
-					fileWriter.close();
-				} else {
-					// read from catalog file write to buffer but skip
-					// validation
+				if (lastModCheck != lastMod) {
 					validSkip = true;
-					RLockTransformerResultPrinter.write(
-							PathsHolder.SAVE_PRODUCT_PATH,
-							PathsHolder.CATALOG, resultWriter,
-							transParams);
+					TransformerResultPrinter.write(SAVE_PRODUCT_PATH, CATALOG,
+							resultWriter, transParams);
+				} else {
 					// try to write into the catalog file
 					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
 					fileWriter.write(resultWriter.toString());
@@ -163,8 +160,8 @@ public final class CatalogAction extends DispatchAction {
 			return mapping.findForward(PRODUCTS_LIST_ACTION);
 		} else {
 			// forward back to adding page with validation errors
-			Writer writer = response.getWriter();
-			writer.write(resultWriter.toString());
+			Writer pageWriter = response.getWriter();
+			pageWriter.write(resultWriter.toString());
 		}
 		return null;
 	}
@@ -176,6 +173,22 @@ public final class CatalogAction extends DispatchAction {
 			}
 		}
 		return true;
+	}
+
+	private void readDocAndPutIntoForm(ActionForm form) throws JDOMException,
+			IOException {
+		SAXBuilder saxBuilder = new SAXBuilder();
+		File catalogFile = new File(PATH_TO_CATALOG);
+		Lock readLock = SingleRWLock.INSTANCE.readLock();
+		Document document = null;
+		readLock.lock();
+		try {
+			document = saxBuilder.build(catalogFile);
+		} finally {
+			readLock.unlock();
+		}
+		ProductsForm productsForm = (ProductsForm) form;
+		productsForm.setDocument(document);
 	}
 
 	private String indexToCatName(Document document, int catIndex) {
@@ -193,8 +206,8 @@ public final class CatalogAction extends DispatchAction {
 		return subcatNameAtr.getValue();
 	}
 
-	private void fillParams(HttpServletRequest request,
-			Map<String, Object> params) {
+	private void fillParams(Map<String, Object> params,
+			HttpServletRequest request) {
 		String catName = request.getParameter("catName");
 		String subcatName = request.getParameter("subcatName");
 
