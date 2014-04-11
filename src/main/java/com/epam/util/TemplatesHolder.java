@@ -1,8 +1,8 @@
 package com.epam.util;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
@@ -13,20 +13,9 @@ import javax.xml.transform.stream.StreamSource;
 
 public class TemplatesHolder {
 
-	private static Map<String, Templates> templatesMap = new HashMap<String, Templates>();
+	private static Map<String, Templates> templatesMap = new ConcurrentHashMap<String, Templates>();
 	private static TransformerFactory transformerFactory = TransformerFactory
 			.newInstance();
-
-	private static void putTemplate(String key, InputStream inputStream) {
-		Source source = new StreamSource(inputStream);
-		Templates templates = null;
-		try {
-			templates = transformerFactory.newTemplates(source);
-		} catch (TransformerConfigurationException e) {
-			e.printStackTrace();
-		}
-		templatesMap.put(key, templates);
-	}
 
 	public static Transformer getTransformer(String keyPath)
 			throws TransformerConfigurationException {
@@ -35,7 +24,9 @@ public class TemplatesHolder {
 		} else {
 			InputStream inputStream = TemplatesHolder.class
 					.getResourceAsStream(keyPath);
-			putTemplate(keyPath, inputStream);
+			Source source = new StreamSource(inputStream);
+			Templates templates = transformerFactory.newTemplates(source);
+			templatesMap.put(keyPath, templates);
 			return templatesMap.get(keyPath).newTransformer();
 		}
 

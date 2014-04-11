@@ -61,17 +61,17 @@
 		<xsl:element name="products">
 			<xsl:apply-templates />
 			<xsl:element name="product">
+				<xsl:element name="producer">
+					<xsl:value-of select="$producer" />
+				</xsl:element>
+				<xsl:element name="model">
+					<xsl:value-of select="$model" />
+				</xsl:element>
 				<xsl:element name="color">
 					<xsl:value-of select="$color" />
 				</xsl:element>
 				<xsl:element name="dateOfIssue">
 					<xsl:value-of select="$dateOfIssue" />
-				</xsl:element>
-				<xsl:element name="model">
-					<xsl:value-of select="$model" />
-				</xsl:element>
-				<xsl:element name="producer">
-					<xsl:value-of select="$producer" />
 				</xsl:element>
 				<xsl:choose>
 					<xsl:when test="not($notInStock)">
@@ -83,7 +83,7 @@
 						<xsl:element name="notInStock">not in stock</xsl:element>
 					</xsl:otherwise>
 				</xsl:choose>
-				
+
 			</xsl:element>
 		</xsl:element>
 	</xsl:template>

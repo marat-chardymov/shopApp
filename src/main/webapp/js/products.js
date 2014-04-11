@@ -22,7 +22,7 @@ $(document).ready(function() {
 	$('#productsForm').find('.dateOfIssue').each(function() {
 		$(this).rules('add', {
 			required : true,
-			regex: "(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)",
+			regex: "^(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)$",
 			messages : {
 				required : "date of issue is required.",
 				regex: "invalid date format"

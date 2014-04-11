@@ -2,15 +2,22 @@
 	margin-top: 50px;
 	margin-left: 100px;
 }
-#add{
+
+#add {
 	margin-left: 10px;
 }
-#backBtn{
+
+#backBtn {
 	margin-right: 30px;
 }
-.dateOfIssue{
-	width:190px;
+
+.dateOfIssue {
+	width: 190px;
 }
-.model{
+
+.model {
 	width: 170px;
+}
+label{
+	margin-bottom: 0px;
 }
