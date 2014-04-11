@@ -1,10 +1,7 @@
 package com.epam.actions;
 
-import static com.epam.util.PathsHolder.ADDING_PAGE_PATH;
-import static com.epam.util.PathsHolder.CATALOG;
-import static com.epam.util.PathsHolder.PATH_TO_CATALOG;
-import static com.epam.util.PathsHolder.SAVE_PRODUCT_PATH;
-
+import static com.epam.util.holders.PathsHolder.*;
+import static com.epam.util.holders.ParamsHolder.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,7 +36,8 @@ public final class CatalogAction extends DispatchAction {
 	private static final String SUBCATEGORIES = "subcategories";
 	private static final String PRODUCTS = "products";
 	private static final String PRODUCTS_LIST_ACTION = "productsListAction";
-
+	private static final String ERROR = "errorPage";
+	
 	public ActionForward categories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -64,10 +62,23 @@ public final class CatalogAction extends DispatchAction {
 	public ActionForward save(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		Document document = ((ProductsForm) form).getDocument();
+		ProductsForm productsForm = (ProductsForm) form;
+		Document document = productsForm.getDocument();
 		File catalogFile = new File(PATH_TO_CATALOG);
-		Writer fileWrite = new FileWriter(catalogFile);
-		new XMLOutputter().output(document, fileWrite);
+		Lock writeLock = SingleRWLock.INSTANCE.writeLock();
+		writeLock.lock();
+		try {
+			long lastModCheck = catalogFile.lastModified();
+			long lastMod = productsForm.getLastMod();
+			if (lastMod != lastModCheck) {
+				return mapping.findForward(ERROR);
+			} else {
+				Writer fileWrite = new FileWriter(catalogFile);
+				new XMLOutputter().output(document, fileWrite);
+			}
+		} finally {
+			writeLock.unlock();
+		}
 		return mapping.findForward(PRODUCTS);
 	}
 
@@ -85,8 +96,8 @@ public final class CatalogAction extends DispatchAction {
 
 		PrintWriter resultWriter = response.getWriter();
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
-		paramsMap.put("catName", catName);
-		paramsMap.put("subcatName", subcatName);
+		paramsMap.put(CAT_NAME, catName);
+		paramsMap.put(SUBCAT_NAME, subcatName);
 
 		Lock readLock = SingleRWLock.INSTANCE.readLock();
 		readLock.lock();
@@ -111,19 +122,19 @@ public final class CatalogAction extends DispatchAction {
 		StringBuilder priceError = new StringBuilder();
 		StringBuilder producerError = new StringBuilder();
 
-		transParams.put("modelError", (Object) modelError);
-		transParams.put("colorError", (Object) colorError);
-		transParams.put("dateOfIssueError", (Object) dateOfIssueError);
-		transParams.put("priceError", (Object) priceError);
-		transParams.put("producerError", (Object) producerError);
+		transParams.put("MODEL_ERROR", (Object) modelError);
+		transParams.put("COLOR_ERROR", (Object) colorError);
+		transParams.put("DATE_OF_ISSUE_ERROR", (Object) dateOfIssueError);
+		transParams.put("PRICE_ERROR", (Object) priceError);
+		transParams.put("PRODUCER_ERROR", (Object) producerError);
 
 		Boolean validSkip = false;
-		transParams.put("validSkip", validSkip);
+		transParams.put("VALID_SKIP", validSkip);
 
 		File catalogFile = new File(PATH_TO_CATALOG);
 		// read from catalog file write to buffer
 		Writer resultWriter = new StringWriter();
-	
+
 		Lock readLock = SingleRWLock.INSTANCE.readLock();
 		readLock.lock();
 		long lastMod = 0;
@@ -135,7 +146,7 @@ public final class CatalogAction extends DispatchAction {
 		} finally {
 			readLock.unlock();
 		}
-		
+
 		if (noErrors(modelError, colorError, dateOfIssueError, priceError,
 				producerError)) {
 			Lock writeLock = SingleRWLock.INSTANCE.writeLock();
@@ -181,20 +192,23 @@ public final class CatalogAction extends DispatchAction {
 		File catalogFile = new File(PATH_TO_CATALOG);
 		Lock readLock = SingleRWLock.INSTANCE.readLock();
 		Document document = null;
+		long lastMod;
 		readLock.lock();
 		try {
+			lastMod = catalogFile.lastModified();
 			document = saxBuilder.build(catalogFile);
 		} finally {
 			readLock.unlock();
 		}
 		ProductsForm productsForm = (ProductsForm) form;
 		productsForm.setDocument(document);
+		productsForm.setLastMod(lastMod);
 	}
 
 	private String indexToCatName(Document document, int catIndex) {
 		Element rootElement = document.getRootElement();
 		Attribute catNameAttr = rootElement.getChildren().get(catIndex)
-				.getAttribute("name");
+				.getAttribute(NAME);
 		return catNameAttr.getValue();
 	}
 
@@ -202,34 +216,34 @@ public final class CatalogAction extends DispatchAction {
 			int subcatIndex) {
 		Element rootElement = document.getRootElement();
 		Attribute subcatNameAtr = rootElement.getChildren().get(catIndex)
-				.getChildren().get(subcatIndex).getAttribute("name");
+				.getChildren().get(subcatIndex).getAttribute(NAME);
 		return subcatNameAtr.getValue();
 	}
 
 	private void fillParams(Map<String, Object> params,
 			HttpServletRequest request) {
-		String catName = request.getParameter("catName");
-		String subcatName = request.getParameter("subcatName");
+		String catName = request.getParameter(CAT_NAME);
+		String subcatName = request.getParameter(SUBCAT_NAME);
 
-		String model = request.getParameter("model");
-		String color = request.getParameter("color");
-		String dateOfIssue = request.getParameter("dateOfIssue");
-		String producer = request.getParameter("producer");
-		String notInStockStr = request.getParameter("notInStock");
-		String price = request.getParameter("price");
+		String model = request.getParameter(MODEL);
+		String color = request.getParameter(COLOR);
+		String dateOfIssue = request.getParameter(DATE_OF_ISSUE);
+		String producer = request.getParameter(PRODUCER);
+		String notInStockStr = request.getParameter(NOT_IN_STOCK);
+		String price = request.getParameter(PRICE);
 		boolean notInStock = false;
 		if ("on".equals(notInStockStr)) {
 			notInStock = true;
 			price = "";
 		}
-		params.put("catName", catName);
-		params.put("subcatName", subcatName);
-		params.put("model", model);
-		params.put("color", color);
-		params.put("dateOfIssue", dateOfIssue);
-		params.put("price", price);
-		params.put("producer", producer);
-		params.put("notInStock", notInStock);
+		params.put(CAT_NAME, catName);
+		params.put(SUBCAT_NAME, subcatName);
+		params.put(MODEL, model);
+		params.put(COLOR, color);
+		params.put(DATE_OF_ISSUE, dateOfIssue);
+		params.put(PRICE, price);
+		params.put(PRODUCER, producer);
+		params.put(NOT_IN_STOCK, notInStock);
 
 	}
 }

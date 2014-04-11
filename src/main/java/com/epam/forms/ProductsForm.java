@@ -7,7 +7,8 @@ public class ProductsForm extends ActionForm {
 	
 	private int catIndex;
 	private int subcatIndex;
-    private Document document;    
+    private Document document;   
+    private long lastMod;
     
     public int getCatIndex() {
 		return catIndex;
@@ -32,5 +33,14 @@ public class ProductsForm extends ActionForm {
     public void setDocument(Document document) {
         this.document = document;
     }
+
+	public long getLastMod() {
+		return lastMod;
+	}
+
+	public void setLastMod(long lastMod) {
+		this.lastMod = lastMod;
+	}
+    
 
 }

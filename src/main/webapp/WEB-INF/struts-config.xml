@@ -15,6 +15,7 @@
 			<forward name="products" path="/products.jsp" redirect="true"/>
 			<forward name="productsListAction" path="/catalog.do?action=productList"/>
 			<forward name="addingPage" path="/addingPage.jsp"/>
+			<forward name="errorPage" path="/error.jsp"/>
 		</action>
 	</action-mappings>
 </struts-config>
