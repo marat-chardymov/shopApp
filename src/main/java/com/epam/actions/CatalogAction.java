@@ -75,6 +75,8 @@ public final class CatalogAction extends DispatchAction {
 			} else {
 				Writer fileWrite = new FileWriter(catalogFile);
 				new XMLOutputter().output(document, fileWrite);
+				long lastModNew = catalogFile.lastModified();
+				productsForm.setLastMod(lastModNew);
 			}
 		} finally {
 			writeLock.unlock();

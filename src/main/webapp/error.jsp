@@ -3,7 +3,7 @@
 <head>
 <title>Error</title>
 <link
-	href="${pageContext.request.contextPath}/css/lib/bootstrap.min.css"
+	href="${pageContext.request.contextPath}/css/bootstrap.min.css"
 	rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/css/error_page.css"
 	rel="stylesheet" />
@@ -13,11 +13,11 @@
 		<div class="hero-unit">
 			<h1>Error</h1>
 
-			<p>Update file attempt failed. Try again</p>
+			<p>File update attempt failed. Try again</p>
 
 			<p>
 				<a href="catalog.do?action=productList&catIndex=${productsForm.catIndex}&subcatIndex=${subcatIndex}"
-					class="btn btn-primary btn-large"> »</a>
+					class="btn btn-primary btn-large"> to product list »</a>
 			</p>
 		</div>
 		<hr>
