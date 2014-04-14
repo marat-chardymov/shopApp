@@ -122,14 +122,14 @@ public final class CatalogAction extends DispatchAction {
 		StringBuilder priceError = new StringBuilder();
 		StringBuilder producerError = new StringBuilder();
 
-		transParams.put("MODEL_ERROR", (Object) modelError);
-		transParams.put("COLOR_ERROR", (Object) colorError);
-		transParams.put("DATE_OF_ISSUE_ERROR", (Object) dateOfIssueError);
-		transParams.put("PRICE_ERROR", (Object) priceError);
-		transParams.put("PRODUCER_ERROR", (Object) producerError);
+		transParams.put(MODEL_ERROR, (Object) modelError);
+		transParams.put(COLOR_ERROR, (Object) colorError);
+		transParams.put(DATE_OF_ISSUE_ERROR, (Object) dateOfIssueError);
+		transParams.put(PRICE_ERROR, (Object) priceError);
+		transParams.put(PRODUCER_ERROR, (Object) producerError);
 
 		Boolean validSkip = false;
-		transParams.put("VALID_SKIP", validSkip);
+		transParams.put(VALID_SKIP, validSkip);
 
 		File catalogFile = new File(PATH_TO_CATALOG);
 		// read from catalog file write to buffer
