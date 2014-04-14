@@ -37,7 +37,7 @@ public final class CatalogAction extends DispatchAction {
 	private static final String PRODUCTS = "products";
 	private static final String PRODUCTS_LIST_ACTION = "productsListAction";
 	private static final String ERROR = "errorPage";
-	
+
 	public ActionForward categories(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -157,13 +157,12 @@ public final class CatalogAction extends DispatchAction {
 					validSkip = true;
 					TransformerResultPrinter.write(SAVE_PRODUCT_PATH, CATALOG,
 							resultWriter, transParams);
-				} else {
-					// try to write into the catalog file
-					Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
-					fileWriter.write(resultWriter.toString());
-					fileWriter.flush();
-					fileWriter.close();
 				}
+				// try to write into the catalog file
+				Writer fileWriter = new PrintWriter(catalogFile, "UTF-8");
+				fileWriter.write(resultWriter.toString());
+				fileWriter.flush();
+				fileWriter.close();
 
 			} finally {
 				writeLock.unlock();
