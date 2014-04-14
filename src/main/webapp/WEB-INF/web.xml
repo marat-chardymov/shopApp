@@ -4,7 +4,7 @@
 	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
     <listener>
-		<listener-class>com.epam.util.PathsHolder</listener-class>
+		<listener-class>com.epam.util.holders.PathsHolder</listener-class>
 	</listener>
     <servlet>
         <servlet-name>action</servlet-name>

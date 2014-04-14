@@ -1,4 +1,4 @@
-package com.epam.util;
+package com.epam.util.holders;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
